@@ -16,7 +16,6 @@ public class User implements Serializable{
 	private String gender;
 	private String userName;
 	private long phoneNumber;
-	private String role;
 	private String password;
 	
 	
@@ -55,12 +54,6 @@ public class User implements Serializable{
 	}
 	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-	public String getRole() {
-		return role;
-	}
-	public void setRole(String role) {
-		this.role = role;
 	}
 	
 	public String getPassword() {

@@ -7,7 +7,7 @@
 <meta charset="ISO-8859-1">
 <title>Register</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/register.css" />
-<style>
+<style>  
 #role {
 
 width:150px;
@@ -16,6 +16,7 @@ width:150px;
 </style>
 </head>
 <body>
+<%@ include file="header.jsp"%>
 	<div class="container1">
 		<h1>Register</h1>
 		<%
@@ -78,13 +79,6 @@ width:150px;
 			
 			<div class='row'>
 				<div class="col">
-					<label for="role">Role:</label> 
-					<select id="role" name="role" required>
-						<option value="admin">Admin</option>
-						<option value="user">User</option>
-					</select>
-				</div>
-				<div class="col">
 				<%
 					if(request.getAttribute("error")!=null)
 					{
@@ -104,5 +98,6 @@ width:150px;
 		<h2>This is the registration page</h2>
 		<img alt="" src="images/watch.png" width="200" height="200">
 	</div>
+	<%@ include file="footer.jsp"%>
 </body>
 </html>

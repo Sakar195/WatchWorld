@@ -23,10 +23,10 @@ public class UserRegistration extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        private UserDao userDao;
     @Override
-    	public void init(ServletConfig config) throws ServletException {
-    		// TODO Auto-generated method stub
-    		super.init(config);
-    		userDao = new UserDao();
+	public void init(ServletConfig config) throws ServletException {
+		// TODO Auto-generated method stub
+		super.init(config);
+		userDao = new UserDao();
     		
     }
     
@@ -54,7 +54,6 @@ public class UserRegistration extends HttpServlet {
 		String gender=request.getParameter("gender");
 		String userName=request.getParameter("userName");
 		Long phoneNumber=Long.parseLong(request.getParameter("phoneNumber"));
-		String role=request.getParameter("role");
 		String password=request.getParameter("password");
 		String retypePassword=request.getParameter("retypePassword");
 		
@@ -69,14 +68,13 @@ public class UserRegistration extends HttpServlet {
 			request.getRequestDispatcher(appConstant.MyConstants.REGISTER_PAGE).forward(request, response);
 		}
 		
-		model.User user = new User();
+		User user = new User();
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setEmail(email);
 		user.setGender(gender);
 		user.setUserName(userName);
 		user.setPhoneNumber(phoneNumber);
-		user.setRole(role);
 		user.setPassword(PasswordHash.getPasswordHash(password));
 		
 		try {
@@ -84,11 +82,13 @@ public class UserRegistration extends HttpServlet {
 			
 			if(isSuccess)
 			{
-				request.getRequestDispatcher("Login");
+				response.sendRedirect(request.getContextPath()+"/Login");
 			}
 			else 
 			{
-				request.setAttribute("error1", "Username or email or phonenubmer invalid");
+				request.setAttribute("error1", "Username or email or phonenumber invalid");
+				request.setAttribute("firstName", firstName);
+				request.setAttribute("lastName", lastName);
 				request.getRequestDispatcher(appConstant.MyConstants.REGISTER_PAGE).forward(request, response);
 			}
 		} catch (SQLException e) {

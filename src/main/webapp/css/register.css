@@ -8,10 +8,10 @@ body {
     background-image: linear-gradient(to right, pink, purple);
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh;
+   /* height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-start;*/
 }
 
 .container1 {
