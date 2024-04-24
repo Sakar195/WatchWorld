@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.cj.Session;
+
+import appConstant.MyConstants;
 import service.UserDao;
 
 /**
@@ -48,26 +51,36 @@ public class UserLogin extends HttpServlet {
 		{
 			String username=request.getParameter("username");
 			String password=request.getParameter("password");
-			
+			System.out.println("success till here1");
 			
 			try {
+				
+				System.out.println("Attempting login for user: " + username);
 				isLogin = userDao.userLogin(username,password);
+				System.out.println("success till here2");
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				System.out.println("Error in login");
 			}
 			if(isLogin)
 			{
-				HttpSession session=request.getSession();
-				session.setMaxInactiveInterval(3*60);
+				HttpSession session = request.getSession();
 				session.setAttribute("username", username);
-				request.getRequestDispatcher("profile").forward(request, response);
+				session.setAttribute("role", "user");
+				session.setMaxInactiveInterval(5 * 60);
+				request.getRequestDispatcher(MyConstants.HOME_PAGE).forward(request, response);
 			}
 			else
 			{
 				request.setAttribute("error", "invalid username or password");
+				request.getRequestDispatcher(MyConstants.LOGIN_PAGE).forward(request, response);
 				
 			}
+		}
+		else {
+			request.getRequestDispatcher(MyConstants.LOGIN_PAGE).forward(request, response);
 		}
 		doGet(request, response);
 	}

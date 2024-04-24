@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import appConstant.MyConstants;
 import model.User;
 import service.UserDao;
 import utils.PasswordHash;
@@ -65,7 +66,7 @@ public class UserRegistration extends HttpServlet {
 			request.setAttribute("email", email);
 			request.setAttribute("userName", userName);
 			request.setAttribute("phoneNumber", phoneNumber);
-			request.getRequestDispatcher(appConstant.MyConstants.REGISTER_PAGE).forward(request, response);
+			request.getRequestDispatcher(MyConstants.REGISTER_PAGE).forward(request, response);
 		}
 		
 		User user = new User();
@@ -78,22 +79,45 @@ public class UserRegistration extends HttpServlet {
 		user.setPassword(PasswordHash.getPasswordHash(password));
 		
 		try {
-			boolean isSuccess = userDao.saveUser(user);
+			System.out.println("Saving user: " + user);
+			int success = userDao.saveUser(user);
 			
-			if(isSuccess)
+			if(success == 0)
 			{
 				response.sendRedirect(request.getContextPath()+"/Login");
 			}
-			else 
+			else if(success == 1)
 			{
-				request.setAttribute("error1", "Username or email or phonenumber invalid");
+				request.setAttribute("error1", "Username already exists");
 				request.setAttribute("firstName", firstName);
 				request.setAttribute("lastName", lastName);
-				request.getRequestDispatcher(appConstant.MyConstants.REGISTER_PAGE).forward(request, response);
+				request.setAttribute("email", email);
+				request.setAttribute("phoneNumber", phoneNumber);
+				request.getRequestDispatcher(MyConstants.REGISTER_PAGE).forward(request, response);
+			}
+			else if(success == 2)
+			{
+				request.setAttribute("error1", "Email already exists");
+				request.setAttribute("firstName", firstName);
+				request.setAttribute("lastName", lastName);
+				request.setAttribute("userName", userName);
+				request.setAttribute("phoneNumber", phoneNumber);
+				request.getRequestDispatcher(MyConstants.REGISTER_PAGE).forward(request, response);
+			}
+			else if(success == 3)
+			{
+				request.setAttribute("error1", "Phonenumber already exists");
+				request.setAttribute("firstName", firstName);
+				request.setAttribute("lastName", lastName);
+				request.setAttribute("userName", userName);
+				request.setAttribute("email", email);
+				request.getRequestDispatcher(MyConstants.REGISTER_PAGE).forward(request, response);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error1", "An error occurred during registration.");
+			request.getRequestDispatcher(MyConstants.REGISTER_PAGE).forward(request, response);
 		}
 	}
 

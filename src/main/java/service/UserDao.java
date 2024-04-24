@@ -25,26 +25,34 @@ public class UserDao {
 	}
 	
 	//checking method verificaion
-	public boolean saveUser(User user) throws SQLException 
+	public int saveUser(User user) throws SQLException 
 	{
 		String query="select count(*) from user_details";
 		statement=conn.prepareStatement(query);
 		resultSet= statement.executeQuery();
 		
-		
+		int success = 0;
 		if(resultSet.next())
 		{
-			boolean isFind=checkUser(user);
-			if(isFind)
+			int find=checkUser(user);
+			if(find == 1)
 			{
-				isSuccess=false;
+				success=1;
+			}
+			else if(find == 2)
+			{
+				success=2;
+			}
+			else if(find == 3)
+			{
+				success=3;
 			}
 			else
 			{
 				int row=insertUserData(user);
 				if(row>0)
 				{
-					isSuccess=true;
+					success=0;
 				}
 			}
 				
@@ -55,38 +63,41 @@ public class UserDao {
 			int row=insertUserData(user);
 			if(row>0)
 			{
-				isSuccess=true;
+				success=0;
 			}
 		}
-		return isSuccess;
+		return success;
 	}
 	
 	// method to check if the data/user already exists
 	
-	public boolean checkUser(User user) throws SQLException {
+	public int checkUser(User user) throws SQLException {
 		String query = "select Username,Email,Phonenumber from user_details";
 		statement=conn.prepareStatement(query);
 		resultSet=statement.executeQuery();
-		boolean isFind=false;
+		int find = 0;
 		while(resultSet.next())
 		{
-			String usernameFromDB=resultSet.getString("Username");
-			String emailFromDB=resultSet.getString("Email");
-			Long phoneNumberFromDB=resultSet.getLong("Phonenumber");
-			if(user.getUserName().equals(usernameFromDB)|| user.getEmail().equals(emailFromDB) || user.getPhoneNumber()==phoneNumberFromDB)
-			{
-				isFind=true;
+						
+			if (user.getUserName().equals(resultSet.getString("Username"))) {
+				find = 1;
+				break;
+			} else if (user.getEmail().equals(resultSet.getString("Email"))) {
+				find = 2;
+				break;
+			} else if (user.getPhoneNumber() == resultSet.getLong("Phonenumber")) {
+				find = 3;
 				break;
 			}
 			
 		}
-		return isFind;
+		return find;
 	}
 
 	// method to insert data into the database 
 	public int insertUserData(User user) throws SQLException
 	{
-		String query="insert into user_details(Firstname,Lastname,Email,Gender,Username,Phonenumber,Role,Password) values(?,?,?,?,?,?,?,?)";
+		String query="insert into user_details(Firstname,Lastname,Email,Gender,Username,Phonenumber,Password) values(?,?,?,?,?,?,?)";
 		statement=conn.prepareStatement(query);
 		statement.setString(1, user.getFirstName());
 		statement.setString(2, user.getLastName());
@@ -94,7 +105,7 @@ public class UserDao {
 		statement.setString(4, user.getGender());
 		statement.setString(5, user.getUserName());
 		statement.setLong(6, user.getPhoneNumber());
-		statement.setString(8, user.getPassword());
+		statement.setString(7, user.getPassword());
 		
 		int row = statement.executeUpdate();
 		
@@ -102,14 +113,14 @@ public class UserDao {
 	}
 	public boolean userLogin(String username, String password) throws SQLException
 	{
-		statement = conn.prepareStatement("select username,password,role_id from student_register where username=?");
+		statement = conn.prepareStatement("select Username,Password,role_id from user_details where Username=?");
 		statement.setString(1, username);
 		resultSet=statement.executeQuery();
 		boolean isLogin=false;
 		if(resultSet.next())
 		{
 			String hashPasswordFromDb=resultSet.getString("Password");
-			if(PasswordHash.checkPassword(password, hashPasswordFromDb))
+			if(PasswordHash.checkPassword(password, hashPasswordFromDb) && resultSet.getInt("role_id")==2)
 			{
 				isLogin = true;
 			}
