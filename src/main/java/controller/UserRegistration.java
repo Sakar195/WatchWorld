@@ -81,7 +81,7 @@ public class UserRegistration extends HttpServlet {
 		try {
 			System.out.println("Saving user: " + user);
 			int success = userDao.saveUser(user);
-			
+			System.out.println("Saving not user: " + user);
 			if(success == 0)
 			{
 				response.sendRedirect(request.getContextPath()+"/Login");

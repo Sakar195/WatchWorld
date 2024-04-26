@@ -15,7 +15,7 @@ public class UserDao {
 	private Connection conn;
 	private PreparedStatement statement;
 	private ResultSet resultSet;
-	boolean isSuccess=false;
+
 	
 	
 	
@@ -75,6 +75,7 @@ public class UserDao {
 		String query = "select Username,Email,Phonenumber from user_details";
 		statement=conn.prepareStatement(query);
 		resultSet=statement.executeQuery();
+		System.out.println("Saving userdao: " + user);
 		int find = 0;
 		while(resultSet.next())
 		{
@@ -111,26 +112,60 @@ public class UserDao {
 		
 		return row;
 	}
-	public boolean userLogin(String username, String password) throws SQLException
+	public int userLogin(String username, String password) throws SQLException
 	{
 		statement = conn.prepareStatement("select Username,Password,role_id from user_details where Username=?");
 		statement.setString(1, username);
 		resultSet=statement.executeQuery();
+		int login_value=0;
+		if(resultSet.next())
+		{
+			String hashPasswordFromDb=resultSet.getString("Password");
+			if(PasswordHash.checkPassword(password, hashPasswordFromDb))
+			{
+				login_value = 1;
+			}
+			else
+			{
+				login_value = 0;
+			}
+			
+		}
+		else {
+			login_value = 10;
+		}
+		return login_value;
+	}
+	
+	public List<Object> user2Login(String username, String password) throws SQLException
+	{
+		statement = conn.prepareStatement("select Username,Password,role_id from user_details where Username=?");
+		statement.setString(1, username);
+		resultSet=statement.executeQuery();
+		List<Object> userDetails = new ArrayList<Object>();
 		boolean isLogin=false;
 		if(resultSet.next())
 		{
 			String hashPasswordFromDb=resultSet.getString("Password");
-			if(PasswordHash.checkPassword(password, hashPasswordFromDb) && resultSet.getInt("role_id")==2)
+			int role_id = resultSet.getInt("role_id");
+			
+			if(PasswordHash.checkPassword(password, hashPasswordFromDb))
 			{
 				isLogin = true;
+				userDetails.add(isLogin);
+				userDetails.add(role_id);
 			}
+			
 			else
 			{
 				isLogin = false;
+				userDetails.add(isLogin);
+				
 			}
 			
+					
 		}
-		return isLogin;
+		return userDetails;
 	}
 	
 	public List<User> getAllUser() throws SQLException {

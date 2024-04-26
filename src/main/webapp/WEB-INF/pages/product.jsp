@@ -46,7 +46,7 @@
 </style>
 </head>
 <body>
-
+<%@include file="includes/header.jsp" %>
 	<div class="container">
 		<h1>Our Products</h1>
 		<!-- Debug output to check if productdb is null or empty -->
@@ -65,12 +65,12 @@
 						height="200px" width="200px" alt="Product 1">
 					<c:out value="${product.image_name }"></c:out>
 					<div class="price">${product.price}</div>
-					<div class="description">${product.description}</div>
+					<!-- <div class="description">${product.description}</div> -->
 				</div>
 			</c:forEach>
 
 		</div>
 	</div>
-
+<%@include file="includes/footer.jsp" %>
 </body>
 </html>

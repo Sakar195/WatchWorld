@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<%@ include file="header.jsp"%>
+	<%@ include file="includes/header.jsp"%>
 
 	<div class="image-slider">
 		<img src="slider_image1.jpg" alt="Slider Image 1"> <img
@@ -57,7 +57,7 @@
 		<!-- Feature Items Content Goes Here -->
 	</section>
 
-	<%@ include file="footer.jsp"%>
+	<%@ include file="includes/footer.jsp"%>
 
 	<script src="home.js"></script>
 </body>

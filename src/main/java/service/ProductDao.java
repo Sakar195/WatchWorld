@@ -22,7 +22,7 @@ public class ProductDao {
 
 		blob.setBytes(1, Product.getImage_data());
 
-		st.setString(1, Product.getImage_name());
+		st.setString(1, Product.getName());
 		st.setString(2, Product.getDescription());
 		st.setBlob(3, blob);
 		st.setString(4, Product.getImage_name());

@@ -9,7 +9,7 @@
 	href="${pageContext.request.contextPath}/css/login.css">
 </head>
 <body>
-	<%@ include file="header.jsp"%>
+	<%@ include file="includes/header.jsp"%>
 	<div class="container">
 		<div class="login-image"></div>
 		<div class="login-box">
@@ -20,7 +20,7 @@
 				<div class="row">
 					<div class="col">
 						<label for="username">Username:</label> <input type="text"
-							id="username" name="username"
+							id="username" name="username" value="${username}"
 							placeholder="Enter your Username Here" required>
 					</div>
 				</div>
@@ -34,7 +34,7 @@
 
 				<div class="row">
 					<div class="col">
-						<button type="submit" class="login-button">Login</button>
+						<button type="submit" name="login-button" class="login-button">Login</button>
 					</div>
 				</div>
 
@@ -55,6 +55,6 @@
 			</form>
 		</div>
 	</div>
-	<%@ include file="footer.jsp"%>
+	<%@ include file="includes/footer.jsp"%>
 </body>
 </html>

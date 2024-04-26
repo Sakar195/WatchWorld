@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-	<%@ include file="header.jsp"%>
+	<%@ include file="includes/header.jsp"%>
 	<div class="container">
 		<h1>Register</h1>
 		<%
@@ -91,30 +91,27 @@
 			</div>
 
 			<button type="submit">Create Account</button>
-			<a href="<%=request.getContextPath()%>/Login"
-				style="color: green">Go back</a>
+			<a href="<%=request.getContextPath()%>/Login" style="color: green">Go
+				back</a>
 		</form>
 	</div>
-	<%@ include file="footer.jsp"%>
+	<%@ include file="includes/footer.jsp"%>
 </body>
 
 
 <!-- script for phonenubmer validation -->
 <script>
-	document.getElementById("myForm")
-			.addEventListener(
-					"submit",
-					function(event) {
-						const phoneNumber = document
-								.getElementById("phoneNumber").value;
+	document.getElementById("myForm").addEventListener("submit",
+	function(event) {
+		const phoneNumber = document.getElementById("phoneNumber").value;
 
-						// Regular expression for valid phone number formats
-						const phoneNumberPattern = /^\+?[0-9\s\-\(\)]+$/;
+		// Regular expression for valid phone number formats
+		const phoneNumberPattern = /^\+?[0-9\s\-\(\)]+$/;
 
-						if (!phoneNumberPattern.test(phoneNumber)) {
-							event.preventDefault(); // Stop form submission
-							alert("Please enter a valid phone number.");
-						}
-					});
+		if (!phoneNumberPattern.test(phoneNumber)) {
+			event.preventDefault(); // Stop form submission
+			alert("Please enter a valid phone number.");
+		}
+	});
 </script>
 </html>
