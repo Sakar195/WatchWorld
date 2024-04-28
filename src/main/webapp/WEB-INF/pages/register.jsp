@@ -44,6 +44,12 @@
 						value="${email}" name="email" required>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col">
+					<label for="email">Address:</label> <input type="text" id="address"
+						value="${address}" name="address" required>
+				</div>
+			</div>
 
 			<div class="row">
 				<div class="col">

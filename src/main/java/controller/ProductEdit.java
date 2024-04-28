@@ -2,8 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Base64;
-import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,27 +9,29 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import appConstant.MyConstants;
 import model.product;
 import service.ProductDao;
 
 /**
- * Servlet implementation class ViewProduct
+ * Servlet implementation class ProductEdit
  */
-@WebServlet(asyncSupported = true, urlPatterns = { "/VProduct" })
-public class ViewProduct extends HttpServlet {
+@WebServlet(asyncSupported = true, urlPatterns = { "/Edit" })
+public class ProductEdit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	private ProductDao dao;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
+
 		super.init(config);
 		dao = new ProductDao();
 	}
 
-	public ViewProduct() {
+	public ProductEdit() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -44,19 +44,34 @@ public class ViewProduct extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		int id = Integer.valueOf(request.getParameter("id"));
+		System.out.println(id);
+
 		try {
-			List<product> listOfProduct = dao.getProductDetails();
 
-			for (product productdb : listOfProduct) {
-				String base64ImageData = Base64.getEncoder().encodeToString(productdb.getImage_data());
-				productdb.setBase64ImageData(base64ImageData);
+			HttpSession session = request.getSession(false); // Get the current session
+			System.out.println("works1");
+			if (session == null) {
+				// No session, redirect to a login or error page
+				response.sendRedirect(request.getContextPath() + "/Login");
+				System.out.println("works2");
 			}
-			request.setAttribute("listOfProduct", listOfProduct);
-			request.getRequestDispatcher(MyConstants.VIEWPRODUCT_PAGE).forward(request, response);
 
-		} catch (SQLException e) {
-			request.setAttribute("error", "An error occurred while fetching product details.");
-			request.getRequestDispatcher("Error").forward(request, response);
+			else {
+				// ID exists, Fetch a product by ID and forward to an update page
+				System.out.println("works5");
+				product Product = dao.getProductById(id);
+				System.out.println("works6");
+				request.setAttribute("Product", Product);
+				request.getRequestDispatcher(MyConstants.UPDATE_PAGE).forward(request, response);
+				System.out.println("works3");
+			}
+
+		} catch (
+
+		SQLException e) {
+			System.out.println("edit servlet failed");
+			e.printStackTrace();
 		}
 
 	}

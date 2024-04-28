@@ -2,15 +2,25 @@ package model;
 
 public class product {
 	
+	
 	private String image_name;
 	private byte[] image_data;
 	private String base64ImageData;
 	
+	private int id;
 	private String name;
 	private String description;
 	private int price;
 	private int quantity;
 	
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getImage_name() {
 		return image_name;
 	}

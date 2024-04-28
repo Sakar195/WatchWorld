@@ -36,7 +36,7 @@
 					id="Quantity" name="Quantity" min="0" max="50" required>
 			</div>
 			<button type ="submit" >Add Product</button> 
-			<button href="<%=request.getContextPath()%>/admin" style="color: red ">Go Back</button>
+			<a href="<%=request.getContextPath()%>/admin" style="color: green">Go Back</a>
 		</div>
 	</form>
 </body>

@@ -52,6 +52,7 @@ public class UserRegistration extends HttpServlet {
 		String firstName=request.getParameter("firstName");
 		String lastName=request.getParameter("lastName");
 		String email=request.getParameter("email");
+		String address=request.getParameter("address");
 		String gender=request.getParameter("gender");
 		String userName=request.getParameter("userName");
 		Long phoneNumber=Long.parseLong(request.getParameter("phoneNumber"));
@@ -64,6 +65,7 @@ public class UserRegistration extends HttpServlet {
 			request.setAttribute("firstName", firstName);
 			request.setAttribute("lastName", lastName);
 			request.setAttribute("email", email);
+			request.setAttribute("address", address);
 			request.setAttribute("userName", userName);
 			request.setAttribute("phoneNumber", phoneNumber);
 			request.getRequestDispatcher(MyConstants.REGISTER_PAGE).forward(request, response);
@@ -73,6 +75,7 @@ public class UserRegistration extends HttpServlet {
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setEmail(email);
+		user.setAddress(address);
 		user.setGender(gender);
 		user.setUserName(userName);
 		user.setPhoneNumber(phoneNumber);
@@ -92,6 +95,7 @@ public class UserRegistration extends HttpServlet {
 				request.setAttribute("firstName", firstName);
 				request.setAttribute("lastName", lastName);
 				request.setAttribute("email", email);
+				request.setAttribute("address", address);
 				request.setAttribute("phoneNumber", phoneNumber);
 				request.getRequestDispatcher(MyConstants.REGISTER_PAGE).forward(request, response);
 			}
@@ -101,6 +105,7 @@ public class UserRegistration extends HttpServlet {
 				request.setAttribute("firstName", firstName);
 				request.setAttribute("lastName", lastName);
 				request.setAttribute("userName", userName);
+				request.setAttribute("address", address);
 				request.setAttribute("phoneNumber", phoneNumber);
 				request.getRequestDispatcher(MyConstants.REGISTER_PAGE).forward(request, response);
 			}
@@ -111,6 +116,7 @@ public class UserRegistration extends HttpServlet {
 				request.setAttribute("lastName", lastName);
 				request.setAttribute("userName", userName);
 				request.setAttribute("email", email);
+				request.setAttribute("address", address);
 				request.getRequestDispatcher(MyConstants.REGISTER_PAGE).forward(request, response);
 			}
 		} catch (SQLException e) {

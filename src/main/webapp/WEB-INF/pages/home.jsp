@@ -15,47 +15,63 @@
 
 	<%@ include file="includes/header.jsp"%>
 
-	<div class="image-slider">
-		<img src="slider_image1.jpg" alt="Slider Image 1"> <img
-			src="slider_image2.jpg" alt="Slider Image 2"> <img
-			src="slider_image3.jpg" alt="Slider Image 3">
+	<div class="slider-container">
+		<div class="slider">
+			<img src="slider1.jpg" alt="Smartwatches Slider"> <img
+				src="slider2.jpg" alt="Smartwatches Slider"> <img
+				src="slider3.jpg" alt="Smartwatches Slider">
+		</div>
 	</div>
 
-	<section class="popular-items">
-		<h2>Popular Items</h2>
-		<div class="product">
-			<img src="" alt="Product Image">
-			<h3>Product Name</h3>
-			<h4>Price</h4>
-			<button>Add to Cart</button>
-		</div>
-		<div class="product">
-			<img src="" alt="Product Image">
-			<h3>Product Name</h3>
-			<h4>Price</h4>
-			<button>Add to Cart</button>
-		</div>
-		<div class="product">
-			<img src="" alt="Product Image">
-			<h3>Product Name</h3>
-			<h4>Price</h4>
-			<button>Add to Cart</button>
-		</div>
-		<div class="product">
-			<img src="" alt="Product Image">
-			<h3>Product Name</h3>
-			<h4>Price</h4>
-			<button>Add to Cart</button>
+	<div class="container">
+		<h2 class="descrip">Smartwatch Store</h2>
+		<p style="margin-left: 50px;">
+			Welcome to Watch World, your premier destination for the latest
+			smartwatches. Browse our collection of stylish <br> and
+			innovative timepieces designed to keep you connected and on trend.
+			From fitness tracking to messaging alerts, <br> our smartwatches
+			offer a range of features to enhance your lifestyle. Shop now and
+			discover the perfect companion <br> for your wrist.
+		</p>
+
+		<h2>Popular Products</h2>
+		<div class="products">
+			<div class="product">
+				<img src="product1.jpg" alt="Product 1" />
+				<h3>Smartwatch 1</h3>
+				<p>$199.99</p>
+			</div>
+			<div class="product">
+				<img src="product2.jpg" alt="Product 2" />
+				<h3>Smartwatch 2</h3>
+				<p>$249.99</p>
+			</div>
+			<div class="product">
+				<img src="product3.jpg" alt="Product 3" />
+				<h3>Smartwatch 3</h3>
+				<p>$179.99</p>
+			</div>
 		</div>
 
-
-		<!-- Popular Items Content Goes Here -->
-	</section>
-
-	<section class="feature-items">
-		<h2>Feature Items</h2>
-		<!-- Feature Items Content Goes Here -->
-	</section>
+		<h2>Featured Products</h2>
+		<div class="products">
+			<div class="product">
+				<img src="product4.jpg" alt="Product 4" />
+				<h3>Smartwatch 4</h3>
+				<p>$299.99</p>
+			</div>
+			<div class="product">
+				<img src="product5.jpg" alt="Product 5" />
+				<h3>Smartwatch 5</h3>
+				<p>$349.99</p>
+			</div>
+			<div class="product">
+				<img src="product6.jpg" alt="Product 6" />
+				<h3>Smartwatch 6</h3>
+				<p>$199.99</p>
+			</div>
+		</div>
+	</div>
 
 	<%@ include file="includes/footer.jsp"%>
 

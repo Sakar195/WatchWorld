@@ -12,11 +12,20 @@ import utils.DatabaseConnectivity;
 import model.product;
 
 public class ProductDao {
+	
+	private Connection conn;
+	private PreparedStatement st;
+	private ResultSet set;
+	
+	public ProductDao()
+	{
+		conn=DatabaseConnectivity.getDbConnection();
+	}
 
 	public int insertimage(product Product) throws SQLException {
 
-		Connection conn = DatabaseConnectivity.getDbConnection();
-		PreparedStatement st = conn.prepareStatement(
+	
+		st = conn.prepareStatement(
 				"insert into product_details(name,description,image_data,image_name,price,quantity)values(?,?,?,?,?,?)");
 		Blob blob = conn.createBlob();
 
@@ -37,14 +46,14 @@ public class ProductDao {
 
 	public List<product> getProductDetails() throws SQLException {
 
-		Connection conn = DatabaseConnectivity.getDbConnection();
-		PreparedStatement st = conn.prepareStatement("select * from product_details");
-		ResultSet set = st.executeQuery();
+		st = conn.prepareStatement("select * from product_details");
+		set = st.executeQuery();
 
 		List<product> listOfProduct = new ArrayList<>();
 		while (set.next()) {
 			product image = new product();
 			
+			image.setId(set.getInt("id"));
 			image.setName(set.getString("name"));
 			image.setDescription(set.getString("description"));
 			image.setPrice(set.getInt("price"));
@@ -60,5 +69,34 @@ public class ProductDao {
 		}
 		return listOfProduct;
 	}
+	
+	public product getProductById(int id) throws SQLException
+	{
+		st = conn.prepareStatement("select id,name,description,image_data,image_name,price,quantity from product_details where id=? ");
+		st.setInt(1, id);
+		set = st.executeQuery();
+		product Product = new product();
+		if(set.next())
+		{
+			Product.setId(set.getInt("id"));
+			Product.setName(set.getString("name"));
+			Product.setDescription(set.getString("description"));
+			Product.setPrice(set.getInt("price"));
+			Product.setQuantity(set.getInt("quantity"));
+			
+			Product.setImage_data(set.getBlob("image_data").getBytes(1, (int) set.getBlob("image_data").length()));
+			Product.setImage_name(set.getString("image_name"));
+		}
+		else{
+		    throw new SQLException("No product found with ID: " + id);
+		}
+
+		
+		
+		return Product;
+		
+	}
+	
+	
 
 }

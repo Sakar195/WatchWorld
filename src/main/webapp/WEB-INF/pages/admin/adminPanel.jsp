@@ -85,15 +85,16 @@ body {
 </style>
 </head>
 <body>
+<% //include file="../includes/header.jsp"%>
 	<div class="container">
 		<div class="sidebar">
 			<h2>Menu</h2>
 			<ul class="menu-item">
 				<li><a href="#">Dashboard</a></li>
-				<li><a href="<%=request.getContextPath()%>/Product">View Products</a></li>
+				<li><a href="<%=request.getContextPath()%>/VProduct">View Products</a></li>
 				<li><a href="<%=request.getContextPath()%>/AddProduct">Add New Product</a></li>
-				<li><a href="#">Statistics</a></li>
-				<li><a href="#">Orders</a></li>
+				<li><a href="<%=request.getContextPath()%>/Users">Users</a></li>
+				<li><a href="<%=request.getContextPath()%>/Orders">Orders</a></li>
 			</ul>
 			<form action="<%=request.getContextPath()%>/Logout" method="post">
 			<button type="submit"   class="button" onclick="confirmLogout()">Logout</button>
@@ -103,16 +104,16 @@ body {
 			<div class="card">
 				<h2>View Products</h2>
 				<p>View all the products available in the store.</p>
-				<a href="#" class="button">View Products</a>
+				<a href="<%=request.getContextPath()%>/VProduct" class="button">View Products</a>
 			</div>
 			<div class="card">
 				<h2>Add New Product</h2>
 				<p>Add a new smartwatch product to the store.</p>
-				<a href="#" class="button">Add Product</a>
+				<a href="<%=request.getContextPath()%>/AddProduct" class="button">Add Product</a>
 			</div>
 			<div class="card">
-				<h2>Statistics</h2>
-				<p>View statistics and analytics of the smartwatch store.</p>
+				<h2>Users</h2>
+				<p>View all the users. </p>
 				<a href="#" class="button">View Statistics</a>
 			</div>
 			<div class="card">

@@ -5,7 +5,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Shopping Cart</title>
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.ContextPath}/css/cart.css">
+ <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/cart.css">
 </head>
 <body>
   <%@ include file="includes/header.jsp" %> <!-- Include your header -->

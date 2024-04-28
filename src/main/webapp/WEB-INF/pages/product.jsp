@@ -63,7 +63,7 @@
 				<div class="product-card">
 					<img src="data:image/jpeg;base64,${product.base64ImageData}"
 						height="200px" width="200px" alt="Product 1">
-					<c:out value="${product.image_name }"></c:out>
+					<c:out value="${product.name }"></c:out>
 					<div class="price">${product.price}</div>
 					<!-- <div class="description">${product.description}</div> -->
 				</div>
