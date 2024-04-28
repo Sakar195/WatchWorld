@@ -27,7 +27,7 @@
 			<div class="Details">
 				<label for="productImage">Product Image:</label>
     			<!-- Display current image if available -->
-    			<img src="data:image/jpeg;base64,${Product.base64ImageData}" alt="Current Image" height="60px" width="60px">
+    			<img src="data:image/*;base64,${Product.base64ImageData}" alt="Current Image" height="60px" width="60px">
     			<input type="file" name="productImage" accept="image/*">
 			</div>
 			<div class="Details">
@@ -38,8 +38,8 @@
 				<label for="Quantity">Quantity:</label> <input type="number"
 					id="Quantity" name="Quantity" min="0" max="1000"  value="${Product.quantity}" required>
 			</div>
-			<button type ="submit" >Add Product</button> 
-			<a href="<%=request.getContextPath()%>/admin" style="color: green">Go Back</a>
+			<button type ="submit" >Update Product</button> 
+			<a href="<%=request.getContextPath()%>/VProduct" style="color: green">Go Back</a>
 		</div>
 	</form>
 </body>
