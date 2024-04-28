@@ -112,7 +112,7 @@ public class UserLogin extends HttpServlet {
 		}
 		else
 		{
-			request.setAttribute("error", "Not entering Login");
+			//request.setAttribute("error", "Not entering Login");
 			doGet(request, response);
 		}
 

@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -61,6 +61,9 @@ public class ProductEdit extends HttpServlet {
 				// ID exists, Fetch a product by ID and forward to an update page
 				System.out.println("works5");
 				product Product = dao.getProductById(id);
+				
+				session.setAttribute("id", id);
+				
 				System.out.println("works6");
 				request.setAttribute("Product", Product);
 				request.getRequestDispatcher(MyConstants.UPDATE_PAGE).forward(request, response);

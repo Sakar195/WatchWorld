@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -61,7 +61,7 @@ public class AddNewProduct extends HttpServlet {
 		    // Handle error: set a default value, return an error message, or log the error
 		    price = -1; // Example of a default value
 		    quantity = -1; // Example of a default value
-		    // Optionally, log the error or notify the user
+		    
 		}
 
 		Part filePart = request.getPart("productImage");

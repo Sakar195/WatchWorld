@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import appConstant.MyConstants;
 
 /**
- * Servlet implementation class ViewUser
+ * Servlet implementation class adminPanel
  */
-@WebServlet(asyncSupported = true, urlPatterns = { "/User" })
-public class ViewUser extends HttpServlet {
+@WebServlet(asyncSupported = true, urlPatterns = { "/admin" })
+public class adminPanel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ViewUser() {
+    public adminPanel() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,7 +29,7 @@ public class ViewUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher(MyConstants.VIEW_USER_PAGE).forward(request, response);
+		request.getRequestDispatcher(MyConstants.ADMIN_PAGE).forward(request, response);
 	}
 
 	/**
