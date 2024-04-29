@@ -115,4 +115,18 @@ public class ProductDao {
 
 	}
 
+	public boolean deleteProduct(int id) throws SQLException {
+		
+		boolean isSuccess = false;
+		st = conn.prepareStatement("DELETE FROM product_details WHERE id = ?");
+		st.setInt(1, id);
+		int row = st.executeUpdate();
+		if(row>0)
+		{
+			isSuccess = true;
+		}
+		
+		return isSuccess;
+	}
+
 }

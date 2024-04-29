@@ -96,24 +96,24 @@ public class UserDao {
 		return row;
 	}
 
-	public int user2Login(String username, String password) throws SQLException {
-		statement = conn.prepareStatement("select Username,Password,role_id from user_details where Username=?");
-		statement.setString(1, username);
-		resultSet = statement.executeQuery();
-		int login_value = 0;
-		if (resultSet.next()) {
-			String hashPasswordFromDb = resultSet.getString("Password");
-			if (PasswordHash.checkPassword(password, hashPasswordFromDb)) {
-				login_value = 1;
-			} else {
-				login_value = 0;
-			}
-
-		} else {
-			login_value = 10;
-		}
-		return login_value;
-	}
+//	public int user2Login(String username, String password) throws SQLException {
+//		statement = conn.prepareStatement("select Username,Password,role_id from user_details where Username=?");
+//		statement.setString(1, username);
+//		resultSet = statement.executeQuery();
+//		int login_value = 0;
+//		if (resultSet.next()) {
+//			String hashPasswordFromDb = resultSet.getString("Password");
+//			if (PasswordHash.checkPassword(password, hashPasswordFromDb)) {
+//				login_value = 1;
+//			} else {
+//				login_value = 0;
+//			}
+//
+//		} else {
+//			login_value = 10;
+//		}
+//		return login_value;
+//	}
 
 	public List<Integer> userLogin(String username, String password) throws SQLException {
 

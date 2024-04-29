@@ -11,10 +11,18 @@
 	href="${pageContext.request.contextPath}/css/addProduct.css">
 </head>
 <body>
+		
 <c:set var="Product" value="${Product}"></c:set>
 	<form action="<%=request.getContextPath()%>/Update" method="post" enctype="multipart/form-data">
 		<div class="container">
 			<h2>Update Product</h2>
+			<%
+			if (request.getAttribute("message") != null) {
+			%>
+			<p style="color: green"><%=request.getAttribute("message")%></p>
+			<%
+			}
+			%>
 			<div class="Details">
 				<label for="productName">Product Name:</label> <input type="text"
 					class="productName" name="productName" value="${Product.name}" required>
@@ -38,6 +46,13 @@
 				<label for="Quantity">Quantity:</label> <input type="number"
 					id="Quantity" name="Quantity" min="0" max="1000"  value="${Product.quantity}" required>
 			</div>
+			<%
+			if (request.getAttribute("error") != null) {
+			%>
+			<p style="color: red"><%=request.getAttribute("error")%></p>
+			<%
+			}
+			%>
 			<button type ="submit" >Update Product</button> 
 			<a href="<%=request.getContextPath()%>/VProduct" style="color: green">Go Back</a>
 		</div>

@@ -123,11 +123,13 @@ public class ProductUpdate extends HttpServlet {
 			int row = dao.updateProduct(Product);
 			if(row>0)
 			{
-				response.sendRedirect(request.getContextPath()+"/VProduct");
+				request.setAttribute("message", "Product Successfully Updated");
+				request.getRequestDispatcher(MyConstants.UPDATE_PAGE).forward(request, response);
+				//response.sendRedirect(request.getContextPath()+"/VProduct");
 			}
 			else
 			{
-				//request.setAttribute("error", "problem in updating product");
+				request.setAttribute("error", "problem in updating product");
 				request.getRequestDispatcher(MyConstants.UPDATE_PAGE).forward(request, response);
 			}
 			

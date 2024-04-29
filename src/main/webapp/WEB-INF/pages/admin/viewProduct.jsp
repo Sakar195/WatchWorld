@@ -58,27 +58,41 @@ button {
 button:hover {
 	background-color: #45a049;
 }
+
+.big-font{
+font-size: 1.5rem;
+color: green;
+}
+
 </style>
 </head>
 <body>
 	<h1>This is the view product page</h1>
+	<%
+		
+		if (session.getAttribute("message") != null) {
+		%>
+		<p class="big-font" ><%=session.getAttribute("message")%></p>
+		<%
+		}
+		%>
 	<table border="1">
 		<thead>
 			<tr>
-				<th>ID</th>
+				<th>S.N.</th>
 				<th>Name</th>
 				<th>Description</th>
 				<th>Image</th>
 				<th>Image_name</th>
 				<th>Price</th>
 				<th>Quantity</th>
-				<th></th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="product" items="${listOfProduct }">
+			<c:forEach var="product" items="${listOfProduct }" >
 				<tr>
-					<td><c:out value="${product.id }"></c:out></td>
+					<td><c:out value="${product.id}"></c:out></td>
 					<td><c:out value="${product.name}"></c:out></td>
 					<td style="max-width: 150px;"><c:out value="${product.description }"></c:out></td>
 					<td><img src="data:image/*;base64,${product.base64ImageData}"
@@ -94,7 +108,7 @@ button:hover {
 							<input type="hidden" name="id" value="${product.id}">
 							<button type="submit">Edit</button>
 						</form></td>
-					<td><form action="<%=request.getContextPath()%>/Update"
+					<td><form action="<%=request.getContextPath()%>/Delete"
 							method="post">
 							<input type="hidden" name="id" value="${product.id}">
 							<button type="submit">Delete</button>
