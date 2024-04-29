@@ -67,6 +67,8 @@ header {
 	background-color: #005bb5;
 }
 
+
+
 nav {
 	display: flex;
 	align-items: center;
@@ -94,6 +96,19 @@ nav a:hover {
 	color: #007bff;
 }
 
+.login-button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #005bb5;
+}
 .cart {
 	display: flex;
 	align-items: center;
@@ -156,16 +171,18 @@ nav a:hover {
 			<li><a href="<%=request.getContextPath()%>/Product">Products</a></li>
 			<li><a href="#">About Us</a></li>
 			<%
-			Integer login_value = (Integer) request.getAttribute("login_value");
+			 
+			Integer login_value =(session != null) ? (Integer) session.getAttribute("login_value"):null;
+			%><%
 			if (login_value != null && login_value == 1) {
 			%>
-			<li><form action="<%=request.getContextPath()%>/Logout" method="post"><button type="submit" onclick="confirmLogout()" >Log Out</button></form></li>
+			<li><form action="<%=request.getContextPath()%>/Logout" method="post"><button type="submit" onclick="confirmLogout()" class="login-button">Log Out</button></form></li>
 			<%
 			}
 
 			else {
 			%>
-			<li><form action="<%=request.getContextPath()%>/Login" method="post"><button type="submit">Log In</button></form></li>
+			<li><form action="<%=request.getContextPath()%>/Login" method="post"><button type="submit" class="login-button">Log In</button></form></li>
 			<%
 			}
 			%>

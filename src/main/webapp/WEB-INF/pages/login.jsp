@@ -43,13 +43,13 @@
 					<div class="col">
 						<a href="<%=request.getContextPath()%>/Registration"
 							style="color: green">SignUp</a>
-						<%
+					<%
 					if (request.getAttribute("error") != null) {
 					%>
 						<p style="color: red"><%=request.getAttribute("error")%></p>
 						<%
 					}
-					%>
+					%>	
 					</div>
 				</div>
 			</form>

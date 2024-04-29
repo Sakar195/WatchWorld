@@ -76,6 +76,9 @@ color: green;
 		<%
 		}
 		%>
+		<%
+		session.removeAttribute("message");
+		%>
 	<table border="1">
 		<thead>
 			<tr>
@@ -127,5 +130,6 @@ color: green;
 
 
 	</table>
+	<a href="<%=request.getContextPath()%>/admin" style="color: green">Go Back</a>
 </body>
 </html>

@@ -10,22 +10,24 @@
 <style>
 .container {
 	margin-top: 100px;
-	margin-left: 250px;
+	padding: 20px;
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
+	justify-content: flex-start;
 }
 
 .product-card {
-	width: 200px;
-	height: 250px;
-	border: 1px solid #ccc;
+	width: 250px;
+	border: 1px solid #ddd;
 	border-radius: 8px;
-	padding: 10px;
-	margin-left: 30px;
-	margin-bottom: 30px;
-	display: inline-block;
-	vertical-align: top;
+	padding: 15px;
+	margin: 20px;
+	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+	transition: transform 0.2s;
+}
+
+.product-card:hover {
+	transform: scale(1.05);
 }
 
 .product-card img {
@@ -33,44 +35,89 @@
 	border-radius: 8px;
 }
 
-.product-card .price {
+.product-name {
 	font-weight: bold;
+	font-size: 16px;
+	margin-top: 10px;
+}
+
+.price {
+	font-weight: bold;
+	font-size: 18px;
 	color: #333;
 	margin-top: 5px;
 }
 
-.product-card .description {
-	margin-top: 5px;
-	color: #666;
+.button-group {
+	display: flex; /* Ensure buttons are displayed in a row */
+	justify-content: space-between; /* Space out buttons */
+	margin-top: 10px; /* Add spacing between price and buttons */
+}
+
+.button-group button {
+	padding: 8px 12px;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.button-group button:hover {
+	background-color: #45a049;
 }
 </style>
 </head>
 <body>
-<%@include file="includes/header.jsp" %>
+	<%@ include file="includes/header.jsp"%>
+		 <h1 style="margin-left: 20px;">Our Products</h1>
+
 	<div class="container">
-		<h1>Our Products</h1>
-		<!-- Debug output to check if productdb is null or empty -->
-		<c:if test="${productlist == null}">
-			<p>Product list is null</p>
-		</c:if>
+	
 
-		<c:if test="${productdb != null && productdb.isEmpty()}">
-			<p>Product list is empty</p>
-		</c:if>
-		<div class="product-list">
-			<!-- Product Cards -->
-			<c:forEach var="product" items="${productlist}">
-				<div class="product-card">
-					<img src="data:image/jpeg;base64,${product.base64ImageData}"
-						height="200px" width="200px" alt="Product 1">
-					<c:out value="${product.name }"></c:out>
-					<div class="price">${product.price}</div>
-					<!-- <div class="description">${product.description}</div> -->
-				</div>
-			</c:forEach>
+		<!-- Handle Empty Product List -->
+		<c:choose>
+			<c:when test="${productlist == null}">
+				<p>Product list is unavailable.</p>
+			</c:when>
+			<c:when test="${productlist.isEmpty()}">
+				<p>No products found.</p>
+			</c:when>
+			<c:otherwise>
+				<!-- Display Product Cards -->
+				<c:forEach var="product" items="${productlist}">
+					<div class="product-card">
+						<img src="data:image/jpeg;base64,${product.base64ImageData}"
+							alt="${product.name}" />
+						<div class="product-name">
+							<c:out value="${product.name}" />
+						</div>
+						<div class="price">
+							$
+							<c:out value="${product.price}" />
+						</div>
 
-		</div>
+						<!-- Button Group for Actions -->
+						<div class="button-group">
+							<!-- View Details Button -->
+							<form action="Details" method="get">
+								<input type="hidden" name="id" value="${product.id}" />
+								<button>View Details</button>
+							</form>
+
+							<!-- Add to Cart Button -->
+							<form action="AddToCart" method="post">
+								<input type="hidden" name="id" value="${product.id}" />
+								<button>Add to Cart</button>
+							</form>
+						</div>
+					</div>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
 	</div>
-<%@include file="includes/footer.jsp" %>
+
+	<%@ include file="includes/footer.jsp"%>
 </body>
 </html>
