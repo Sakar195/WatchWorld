@@ -78,6 +78,7 @@ public class UserLogin extends HttpServlet {
 					HttpSession session = request.getSession();
 					session.setAttribute("username", username);
 					session.setAttribute("role", role_id);
+					session.setAttribute("login_value", login_value);
 					session.setMaxInactiveInterval(30 * 60);
 					System.out.println("success till here1");
 					// if user is admin

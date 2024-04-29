@@ -61,6 +61,7 @@ public class ProductDelete extends HttpServlet {
 			
 		}
 		else {
+			System.out.println("error in session");
 			
 		}
 	}

@@ -39,7 +39,8 @@ public class UserProduct extends HttpServlet {
 				productdb.setBase64ImageData(base64ImageData);
 			}
 			System.out.println("Retrieved product list with " + listOfProduct.size() + " items.");
-
+			
+			
 			request.setAttribute("productlist", listOfProduct);
 			request.getRequestDispatcher(MyConstants.PRODUCT_PAGE).forward(request, response);
 		} catch (SQLException e) {
