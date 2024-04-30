@@ -63,7 +63,7 @@ th {
 	<div class="container">
 		<h1>Order</h1>
 		<table>
-			<th>
+			<thead>
 			<tr>
 				<th>Order ID</th>
 				<th>Customer Name</th>
@@ -72,7 +72,7 @@ th {
 				<th>Ordered Date</th>
 				<th>Status</th>
 			</tr>
-			</th>
+			</thead>
 			<tbody>
 				<tr>
 					<td>1</td>

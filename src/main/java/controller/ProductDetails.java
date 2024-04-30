@@ -1,11 +1,18 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import appConstant.MyConstants;
+import model.product;
+import service.ProductDao;
 
 /**
  * Servlet implementation class ProductDetails
@@ -13,27 +20,66 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(asyncSupported = true, urlPatterns = { "/Details" })
 public class ProductDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ProductDetails() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private ProductDao dao;
+
+	@Override
+	public void init() throws ServletException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		super.init();
+		dao = new ProductDao();
+	}
+
+	public ProductDetails() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		int id = Integer.valueOf(request.getParameter("id"));
+
+		HttpSession session = request.getSession(false); // Get the current session
+		System.out.println("works1");
+		if (session == null) {
+			// No session, redirect to a login or error page
+			response.sendRedirect(request.getContextPath() + "/Login");
+			System.out.println("works2");
+		}
+
+		else {
+			// ID exists, Fetch a product by ID and forward ProductDetails page
+			System.out.println("works5");
+			product Product;
+			try {
+				
+				Product = dao.getProductById(id);
+				System.out.println("this is the product id"+id);
+				request.setAttribute("Product", Product);
+				request.getRequestDispatcher(MyConstants.PRODUCT_DETAILS_PAGE).forward(request, response);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			session.setAttribute("id", id);
+
+			System.out.println("works3");
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

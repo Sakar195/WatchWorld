@@ -77,47 +77,40 @@
 	
 
 		<!-- Handle Empty Product List -->
-		<c:choose>
-			<c:when test="${productlist == null}">
-				<p>Product list is unavailable.</p>
-			</c:when>
-			<c:when test="${productlist.isEmpty()}">
-				<p>No products found.</p>
-			</c:when>
-			<c:otherwise>
+		
 				<!-- Display Product Cards -->
-				<c:forEach var="product" items="${productlist}">
-					<div class="product-card">
-						<img src="data:image/jpeg;base64,${product.base64ImageData}"
-							alt="${product.name}" />
-						<div class="product-name">
-							<c:out value="${product.name}" />
-						</div>
-						<div class="price">
-							$
-							<c:out value="${product.price}" />
-						</div>
+		<c:forEach var="product" items="${productlist}">
+			<div class="product-card">
+				<img src="data:image/jpeg;base64,${product.base64ImageData}"
+					alt="${product.name}" />
+				<div class="product-name">
+					<c:out value="${product.name}" />
+				</div>
+				<div class="price">
+					$
+					<c:out value="${product.price}" />
+				</div>
 
-						<!-- Button Group for Actions -->
-						<div class="button-group">
-							<!-- View Details Button -->
-							<form action="Details" method="get">
-								<input type="hidden" name="id" value="${product.id}" />
-								<button>View Details</button>
-							</form>
+				<!-- Button Group for Actions -->
+				<div class="button-group">
+					<!-- View Details Button -->
+					<form action="Details" method="get">
+						<input type="hidden" name="id" value="${product.id}" />
+						<button>View Details</button>
+					</form>
 
-							<!-- Add to Cart Button -->
-							<form action="AddToCart" method="post">
-								<input type="hidden" name="id" value="${product.id}" />
-								<button>Add to Cart</button>
-							</form>
-						</div>
-					</div>
-				</c:forEach>
-			</c:otherwise>
-		</c:choose>
+					<!-- Add to Cart Button -->
+					<form action="AddToCart" method="post">
+						<input type="hidden" name="id" value="${product.id}" />
+						<button>Add to Cart</button>
+					</form>
+				</div>
+			</div>
+		</c:forEach>
+
 	</div>
 
 	<%@ include file="includes/footer.jsp"%>
+	<script src="<%=request.getContextPath()%>/js/logout.js"></script>
 </body>
 </html>

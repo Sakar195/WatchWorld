@@ -63,7 +63,7 @@ public class ProductUpdate extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 		Integer id = null;
-		if (session == null || session.getAttribute("id") == null) {
+		if (session == null || session.getAttribute("") == null) {
 		    // Session is invalid or the attribute doesn't exist, handle appropriately
 		    response.sendRedirect(request.getContextPath() + "/Login"); // Redirect to login or error page
 		    System.out.println("getting seeion");
@@ -95,6 +95,7 @@ public class ProductUpdate extends HttpServlet {
 			imageData = buffer.toByteArray();
 		} else {
 			product existingProduct;
+			//if user doesnt upload image, retrieving values form object to set into database
 			try {
 				existingProduct = dao.getProductById(id);
 				if (existingProduct != null) {

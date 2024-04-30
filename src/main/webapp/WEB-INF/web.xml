@@ -33,11 +33,11 @@
 	
 	<filter-mapping>
 		<filter-name>AuthenticationFilter</filter-name>
-		<url-pattern>/Css/*</url-pattern>
+		<url-pattern>/css/*</url-pattern>
 	</filter-mapping>
 
 	<error-page>
 		<error-code>404</error-code>
-		<location>/error</location>
+		<location>/Error</location>
 	</error-page>
 </web-app>

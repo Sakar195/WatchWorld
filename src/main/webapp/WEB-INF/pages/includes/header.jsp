@@ -1,5 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
 * {
 	margin: 0;
@@ -67,8 +77,6 @@ header {
 	background-color: #005bb5;
 }
 
-
-
 nav {
 	display: flex;
 	align-items: center;
@@ -97,18 +105,19 @@ nav a:hover {
 }
 
 .login-button {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+	padding: 8px 12px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
 }
 
 .login-button:hover {
-    background-color: #005bb5;
+	background-color: #005bb5;
 }
+
 .cart {
 	display: flex;
 	align-items: center;
@@ -155,46 +164,87 @@ nav a:hover {
 	}
 }
 </style>
+</head>
+<body>
+	<header>
+		<div class="logo">
+			<img src="<%=request.getContextPath()%>/images/logo.jpg" alt="Logo">
+			<h3>Watch World</h3>
+		</div>
+		<div class="search-bar">
+			<input type="text" placeholder="Search here...">
+			<button class="fa fa-search"></button>
+		</div>
+		<nav>
+			<ul>
+				<li><a href="<%=request.getContextPath()%>/Home">Home</a></li>
+				<li><a href="<%=request.getContextPath()%>/Product">Products</a></li>
+				<li><a href="#">About Us</a></li>
+				<%
+				Integer login_value = (session != null) ? (Integer) session.getAttribute("login_value") : null;
+				%>
+				<%
+				if (login_value != null && login_value == 1) {
+				%>
+				<li><form action="<%=request.getContextPath()%>/Logout"
+						method="post">
+						<button type="submit" onclick="confirmLogout()"
+							class="login-button">Log Out</button>
+					</form></li>
+				<li><a href="<%=request.getContextPath()%>/Profile">Profile</a></li>
+				<%
+				}
 
-<header>
-	<div class="logo">
-		<img src="<%=request.getContextPath()%>/images/logo.jpg" alt="Logo">
-		<h3>Watch World</h3>
-	</div>
-	<div class="search-bar">
-		<input type="text" placeholder="Search here...">
-		<button class="fa fa-search"></button>
-	</div>
-	<nav>
-		<ul>
-			<li><a href="<%=request.getContextPath()%>/Home">Home</a></li>
-			<li><a href="<%=request.getContextPath()%>/Product">Products</a></li>
-			<li><a href="#">About Us</a></li>
-			<%
-			 
-			Integer login_value =(session != null) ? (Integer) session.getAttribute("login_value"):null;
-			%><%
-			if (login_value != null && login_value == 1) {
-			%>
-			<li><form action="<%=request.getContextPath()%>/Logout" method="post"><button type="submit" onclick="confirmLogout()" class="login-button">Log Out</button></form></li>
-			<%
-			}
+				else {
+				%>
+				<li><form action="<%=request.getContextPath()%>/Login"
+						method="post">
+						<button type="submit" class="login-button">Log In</button>
+					</form></li>
+				<%
+				}
+				%>
+			</ul>
+		</nav>
+		<div class="cart">
+			<a href="<%=request.getContextPath()%>/Cart"><i
+				class="fa fa-shopping-bag"></i></a>
+		</div>
+	</header>
+	<script>
+		function confirmLogout() {
+			alert("You have logged out."); // This alert pops up when you click the logout button
+		}
+	</script>
+</body>
+</html>
 
-			else {
-			%>
-			<li><form action="<%=request.getContextPath()%>/Login" method="post"><button type="submit" class="login-button">Log In</button></form></li>
-			<%
-			}
-			%>
-		</ul>
-	</nav>
-	<div class="cart">
-		<a href="<%=request.getContextPath()%>/Cart"><i
-			class="fa fa-shopping-bag"></i></a>
-	</div>
-</header>
-<script>
-function confirmLogout() {
-    alert("You have logged out."); // This alert pops up when you click the logout button
-}
-</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
