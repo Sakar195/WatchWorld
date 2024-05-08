@@ -12,63 +12,110 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter("/AuthenticationFilter")
+@WebFilter("/*")
 public class AuthenticationFilter implements Filter {
 
 	public void destroy() {
 		// TODO Auto-generated method stub
 	}
 
+	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
+		HttpSession session = request.getSession(false);
+
+		String requestUrl = request.getRequestURI();
+
+		// If the request is for a static resource, proceed
+		if (requestUrl.endsWith(".css") || requestUrl.endsWith(".js") || requestUrl.endsWith(".png")
+				|| requestUrl.endsWith(".jpg") || requestUrl.endsWith(".gif")) {
+			chain.doFilter(req, res); // Proceed without additional checks
+			return;
+		}
+
+		// URLs that don't require authentication
+		String[] publicUrls = { "/", "/Login", "/Home", "/Product", "/Details", "/Registration" };
+
+		boolean isPublicUrl = false;
+		for (String url : publicUrls) {
+			if (requestUrl.contains(url)) {
+				isPublicUrl = true;
+				break;
+			}
+		}
+
+		if (isPublicUrl) {
+			chain.doFilter(req, res); // Let through
+			return;
+		}
+
+		// For protected URLs, check if user is logged in
+		if (session == null || session.getAttribute("username") == null) {
+			request.getRequestDispatcher("Login").forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/Login"); // Redirect to login if not logged in
+			return;
+		}
+
+		chain.doFilter(req, res); // Continue the chain for authenticated users
+	}
+
+//@Override
+//	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+//			throws IOException, ServletException {
+//		HttpServletRequest request = (HttpServletRequest) req;
+//		HttpServletResponse response = (HttpServletResponse) res;
 //
 //		String requestUrl = request.getRequestURI();
-//
 //		HttpSession session = request.getSession(false);
-//		System.out.println("entering filter");
-//
-//		if (requestUrl.endsWith(".css")) {
+//		if (requestUrl.endsWith(".css") || requestUrl.endsWith(".js") || requestUrl.endsWith(".png")
+//				|| requestUrl.endsWith(".jpg")) {
+//			System.out.println("sakar1");
 //			chain.doFilter(request, response);
-//			System.out.println("css approved");
 //			return;
-//		} else if (requestUrl.endsWith("/") || requestUrl.endsWith("Cart") || requestUrl.endsWith("Details")
-//				|| requestUrl.endsWith("Login") || requestUrl.endsWith("Registration") || requestUrl.endsWith("Profile")
-//				|| requestUrl.endsWith("Home") || requestUrl.endsWith("Product") || requestUrl.endsWith("Logout")
-//				|| requestUrl.endsWith("AddProduct") || requestUrl.endsWith("Orders") || requestUrl.endsWith("admin")
-//				|| requestUrl.endsWith("Delete") || requestUrl.endsWith("Edit") || requestUrl.endsWith("Update")
-//				|| requestUrl.endsWith("VProduct") || requestUrl.endsWith("User")) {
-//			System.out.println("page enter");
-//			if (session == null) {
-//				request.getRequestDispatcher("Login").forward(request, response);
-//			} else if (session.getAttribute("username") != null) {
-//				System.out.println(" logged in");
-//				chain.doFilter(request, response);
-//			}
 //		}
 //
-//		else if (session.getAttribute("username") == null) {
-//			if (requestUrl.endsWith("Profile") || requestUrl.endsWith("Logout") || requestUrl.endsWith("Admin")) {
-//				response.sendRedirect(request.getContextPath() + "/Login");
-//				System.out.println("Not logged in");
+//		// URLs that requires to be logged in
+//		String[] Urls = { "/Logout", "/Profile", "/admin", "/CPassword", "/AddProduct", "/Orders", "/Delete", "/Edit",
+//				"/Update", "/VProduct", "/User" };
 //
-//			}
-//
-//			else {
-//
-//				chain.doFilter(request, response);
-//			}
-//		} else
-//
-//		{
-//
-//			request.getRequestDispatcher("Error").forward(request, response);
-//
-//		}
+//		String[] publicUrls = { "/", "/Login", "/Home", "/Product", "/Details", "/Registration" };
 
-		chain.doFilter(request, response);
-	}
+	// Not allowin the urls that require login
+//			for (String url : Urls) {
+//				if (requestUrl.contains(url)) {
+//					if (session == null) {
+//
+//						response.sendRedirect(request.getContextPath() + "/Login");
+//						return;
+//					}
+//
+//					else if (session.getAttribute("username") != null) {
+//
+//						chain.doFilter(request, response);
+//					}
+//				}
+//			}
+//
+//		// allowing public pages
+//		if (session == null || session.getAttribute("username") == null) {
+//
+//			for (String url : publicUrls) {
+//				if (requestUrl.endsWith(url)) {
+//					response.sendRedirect(request.getContextPath() + url);
+//					return;
+//				} else {
+//					response.sendRedirect(request.getContextPath() + "/Login");
+//				}
+//			}
+//		}
+//
+//		else {
+//			request.getRequestDispatcher("Error").forward(request, response);
+//		}
+//
+//}
 
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub

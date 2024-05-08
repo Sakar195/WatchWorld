@@ -25,91 +25,74 @@ import utils.DatabaseConnectivity;
  */
 @WebServlet(asyncSupported = true, urlPatterns = { "/Login" })
 public class UserLogin extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private UserDao userDao;
+    private static final long serialVersionUID = 1L;
+    private UserDao userDao;
 
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
-		super.init(config);
-		userDao = new UserDao();
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        userDao = new UserDao();
+    }
 
-	}
+    public UserLogin() {
+        super();
+        DatabaseConnectivity.getDbConnection();
+    }
 
-	public UserLogin() {
-		super();
-		DatabaseConnectivity.getDbConnection();
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher(MyConstants.LOGIN_PAGE).forward(request, response);
+    }
 
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		request.getRequestDispatcher(MyConstants.LOGIN_PAGE).forward(request, response);
-	}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String loginClick = request.getParameter("login-button");
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String loginClick = request.getParameter("login-button"); // see if user clicked loginbuton
-		List<Integer> userDetails;
+        if (loginClick == null) {
+            doGet(request, response);
+            return;
+        }
 
-		// if users clicks login button
-		if (loginClick != null) {
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			System.out.println("success till here1");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-			try {
+        try {
+            List<Integer> userDetails = userDao.userLogin(username, password);
+            int login_value = userDetails.get(0);
+            int role_id = userDetails.get(1);
+            int id = userDetails.get(2);
 
-				userDetails = userDao.userLogin(username, password);
-				int login_value = userDetails.get(0);
-				int role_id = userDetails.get(1);
-				System.out.println("success till here1");
+            if (login_value == 1) { // Successful login
+                HttpSession session = request.getSession();
+                session.setAttribute("userId", id);
+                session.setAttribute("username", username);
+                session.setAttribute("role_id", role_id);
+                session.setMaxInactiveInterval(30 * 60);
 
-				// if username and password matched
-				if (login_value == 1) {
+                if (role_id == 1) { // Admin
+                    response.sendRedirect(request.getContextPath() + "/admin");
+                    return;
+                } else if (role_id == 2) { // User
+                    response.sendRedirect(request.getContextPath() + "/Home");
+                    return;
+                }
+            } else if (login_value == 0) { // Incorrect password
+                request.setAttribute("error", "Invalid password");
+                request.setAttribute("username", username);
+                doGet(request, response);
+                return;
+            } else { // Account doesn't exist
+                request.setAttribute("error", "Account Doesn't exist");
+                doGet(request, response);
+                return;
+            }
 
-					HttpSession session = request.getSession();
-					session.setAttribute("username", username);
-					session.setAttribute("role", role_id);
-					session.setAttribute("login_value", login_value);
-					session.setMaxInactiveInterval(30 * 60);
-					System.out.println("success till here1");
-					// if user is admin
-					if (role_id == 1) {
-						request.getRequestDispatcher(MyConstants.ADMIN_PAGE).forward(request, response);
-					}
-					// if user is normal user
-					else {
-						request.getRequestDispatcher(MyConstants.HOME_PAGE).forward(request, response);
-					}
-					// if password does not match in database
-				} else if (login_value == 0) {
-					request.setAttribute("error", "Invalid password");
-					request.setAttribute("username", username);
-					doGet(request, response);
-					System.out.println("Login Failed");
-				}
-				// both username and password incorrect
-				else {
-					request.setAttribute("error", "Account Doesn't exist");
-					doGet(request, response);
-				}
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println("Error in login");
-			}
-
-		}
-		else
-		{
-			//request.setAttribute("error", "Not entering Login");
-			doGet(request, response);
-		}
-
-	}
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (!response.isCommitted()) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error during login");
+            }
+        }
+    }
 }
+

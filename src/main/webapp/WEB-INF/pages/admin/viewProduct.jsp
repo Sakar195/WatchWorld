@@ -59,26 +59,25 @@ button:hover {
 	background-color: #45a049;
 }
 
-.big-font{
-font-size: 1.5rem;
-color: green;
+.big-font {
+	font-size: 1.5rem;
+	color: green;
 }
-
 </style>
 </head>
 <body>
 	<h1>This is the view product page</h1>
 	<%
-		
-		if (session.getAttribute("message") != null) {
-		%>
-		<p class="big-font" ><%=session.getAttribute("message")%></p>
-		<%
-		}
-		%>
-		<%
-		session.removeAttribute("message");
-		%>
+	int id = 1;
+	if (session.getAttribute("message") != null) {
+	%>
+	<p class="big-font"><%=session.getAttribute("message")%></p>
+	<%
+	}
+	%>
+	<%
+	session.removeAttribute("message");
+	%>
 	<table border="1">
 		<thead>
 			<tr>
@@ -93,11 +92,13 @@ color: green;
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="product" items="${listOfProduct }" >
+			<c:set var="id" value="1" />
+			<c:forEach var="product" items="${listOfProduct }">
 				<tr>
-					<td><c:out value="${product.id}"></c:out></td>
+					<td>${id}</td>
 					<td><c:out value="${product.name}"></c:out></td>
-					<td style="max-width: 150px;"><c:out value="${product.description }"></c:out></td>
+					<td style="max-width: 150px;"><c:out
+							value="${product.description }"></c:out></td>
 					<td><img src="data:image/*;base64,${product.base64ImageData}"
 						height="100px" width="100px" alt=""></td>
 					<td><c:out value="${product.image_name }"></c:out></td>
@@ -107,7 +108,7 @@ color: green;
 
 					<td><form action="<%=request.getContextPath()%>/Edit"
 							method="get">
-
+							
 							<input type="hidden" name="id" value="${product.id}">
 							<button type="submit">Edit</button>
 						</form></td>
@@ -117,19 +118,11 @@ color: green;
 							<button type="submit">Delete</button>
 						</form></td>
 				</tr>
-
-
-
+				<c:set var="id" value="${id + 1}" />
 			</c:forEach>
-
-
-
-
 		</tbody>
-
-
-
 	</table>
-	<a href="<%=request.getContextPath()%>/admin" style="color: green">Go Back</a>
+	<a href="<%=request.getContextPath()%>/admin" style="color: green">Go
+		Back</a>
 </body>
 </html>

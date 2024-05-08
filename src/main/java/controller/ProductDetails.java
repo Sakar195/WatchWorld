@@ -49,12 +49,10 @@ public class ProductDetails extends HttpServlet {
 		if (session == null) {
 			// No session, redirect to a login or error page
 			response.sendRedirect(request.getContextPath() + "/Login");
-			System.out.println("works2");
 		}
 
 		else {
 			// ID exists, Fetch a product by ID and forward ProductDetails page
-			System.out.println("works5");
 			product Product;
 			try {
 				

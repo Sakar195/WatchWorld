@@ -10,86 +10,74 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet Filter implementation class Authorization
  */
-@WebFilter("/AuthorizationFilter")
+@WebFilter("/*")
 public class AuthorizationFilter implements Filter {
 
-	/**
-	 * @see Filter#destroy()
-	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
+		// Optional: Cleanup resources here, if needed
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
-		
-//		String reqUrl = request.getRequestURI();
-//		
-//		Integer role_id = (Integer) request.getSession().getAttribute("role_id");
-//		if (role_id != null && role_id == 1) {
-//
-//			if (reqUrl.endsWith("VProduct")) {
-//				
-//				request.getRequestDispatcher("VProduct").forward(request, response);
-//			}
-//			else if (reqUrl.endsWith("Edit")) {
-//			
-//				request.getRequestDispatcher("Edit").forward(request, response);
-//			}
-//			else if (reqUrl.endsWith("Update")) {
-//				
-//				request.getRequestDispatcher("Update").forward(request, response);
-//			}
-//			else if (!reqUrl.endsWith("admin")) {
-//				
-//				response.sendRedirect(request.getContextPath() + "/admin");
-//			}
-//			else
-//			{
-//				request.getRequestDispatcher("admin").forward(request, response);
-//			}
-//		} 
-//		else if (role_id != null && role_id==2) 
-//		{
-//			if (reqUrl.endsWith("Logout"))
-//			{
-//				request.getRequestDispatcher("Logout").forward(request, response);
-//			}
-//			else if (reqUrl.endsWith("Home"))
-//			{
-//				request.getRequestDispatcher("Home").forward(request, response);
-//			}
-//			else if (!reqUrl.endsWith("Profile")) {
-//
-//				response.sendRedirect(request.getContextPath() + "/Profile");
-//			}
-//			else 
-//			{
-//
-//				request.getRequestDispatcher("Profile").forward(request, response);
-//			}
-//			
-//		}
-//		else
-//
-//		{
-//			chain.doFilter(request, response);
-//		}
-		chain.doFilter(request, response);
-		}
-		
-		
 
-	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
+//		HttpSession session = request.getSession(false);
+//		Integer role_id;
+//
+//		if (session != null) {
+//			role_id = (Integer) session.getAttribute("role_id");
+//			if (role_id == 1) { // Admin
+//				handleAdminRequest(request, response);
+//			} else if (role_id == 2) { // User
+//				handleUserRequest(request, response);
+//			} else {
+//				response.sendError(HttpServletResponse.SC_FORBIDDEN, "Unauthorized access");
+//				return;
+//			}
+//		}
+//
+//		
+//	}
+//
+//	private void handleAdminRequest(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//		String reqUrl = request.getRequestURI();
+//		if (reqUrl.endsWith("VProduct") || reqUrl.endsWith("Edit") || reqUrl.endsWith("Update")) {
+//			request.getRequestDispatcher(reqUrl).forward(request, response);
+//			return;
+//		}
+//
+//		if (!reqUrl.endsWith("admin")) {
+//			response.sendRedirect(request.getContextPath() + "/admin");
+//			return;
+//		}
+//
+//		request.getRequestDispatcher("admin").forward(request, response);
+//	}
+//
+//	private void handleUserRequest(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//		String reqUrl = request.getRequestURI();
+//		if (reqUrl.endsWith("Logout") || reqUrl.endsWith("Home")) {
+//			request.getRequestDispatcher(reqUrl).forward(request, response);
+//			return;
+//		}
+//
+//		if (!reqUrl.endsWith("Profile")) {
+//			response.sendRedirect(request.getContextPath() + "/Profile");
+//			return;
+//		}
+//
+//		request.getRequestDispatcher("Profile").forward(request, response);
 	}
 
+	public void init(FilterConfig fConfig) throws ServletException {
+		// Optional: Initialization code, if needed
+	}
 }

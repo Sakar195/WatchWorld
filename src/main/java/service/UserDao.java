@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import model.User;
 import utils.DatabaseConnectivity;
 import utils.PasswordHash;
@@ -96,37 +95,21 @@ public class UserDao {
 		return row;
 	}
 
-//	public int user2Login(String username, String password) throws SQLException {
-//		statement = conn.prepareStatement("select Username,Password,role_id from user_details where Username=?");
-//		statement.setString(1, username);
-//		resultSet = statement.executeQuery();
-//		int login_value = 0;
-//		if (resultSet.next()) {
-//			String hashPasswordFromDb = resultSet.getString("Password");
-//			if (PasswordHash.checkPassword(password, hashPasswordFromDb)) {
-//				login_value = 1;
-//			} else {
-//				login_value = 0;
-//			}
-//
-//		} else {
-//			login_value = 10;
-//		}
-//		return login_value;
-//	}
 
 	public List<Integer> userLogin(String username, String password) throws SQLException {
 
 		List<Integer> userDetails = new ArrayList<Integer>();
 		int login_value = 0;
 		int role_id = 0;
+		int id = 0;
 
-		statement = conn.prepareStatement("select Username,Password,role_id from user_details where Username=?");
+		statement = conn.prepareStatement("select Id ,Username,Password,role_id from user_details where Username=?");
 		statement.setString(1, username);
 		resultSet = statement.executeQuery();
 
 		if (resultSet.next()) {
 			String hashPasswordFromDb = resultSet.getString("Password");
+			id = resultSet.getInt("Id");
 			role_id = resultSet.getInt("role_id");
 
 			if (PasswordHash.checkPassword(password, hashPasswordFromDb)) {
@@ -141,8 +124,30 @@ public class UserDao {
 
 		userDetails.add(login_value);
 		userDetails.add(role_id);
+		userDetails.add(id);
 
 		return userDetails;
+
+	}
+
+	public User getUserById(int id) throws SQLException {
+		statement = conn.prepareStatement(
+				"select Firstname,Lastname,Email,Address,Gender,Username,Phonenumber from user_details where id=?");
+		statement.setInt(1, id);
+		resultSet = statement.executeQuery();
+		User user = new User();
+		if (resultSet.next()) {
+
+			user.setFirstName(resultSet.getString("Firstname"));
+			user.setLastName(resultSet.getString("Lastname"));
+			user.setEmail(resultSet.getString("Email"));
+			user.setAddress(resultSet.getString("Address"));
+			user.setUserName(resultSet.getString("Username"));
+			user.setGender(resultSet.getString("Gender"));
+			user.setPhoneNumber(resultSet.getLong("Phonenumber"));
+
+		}
+		return user;
 
 	}
 
@@ -165,4 +170,102 @@ public class UserDao {
 		return listOfUser;
 	}
 
-}
+	public String updateUser(User user) throws SQLException {
+		int row=0;
+		String result="fail";
+		
+		if(isUsernameTakenByOther(user.getUserName(),user.getId()))
+		{
+			result = "UsernameTakenByOther";
+			return result;
+		}
+		else if(isEmailTakenByOther(user.getEmail(),user.getId()))
+		{
+			result = "EmailTakenByOther";
+			return result;
+		}
+		else if(isPhoneNumberTakenByOther(user.getPhoneNumber(),user.getId()))
+		{
+			result = "PhoneNumberTakenByOther";
+			return result;
+		}
+		else
+		{
+			statement=conn.prepareStatement("update user_details set Firstname=?,Lastname=?,Email=?,Address=?,Gender=?,Username=?,Phonenumber=? where Id=?");
+		
+			statement.setString(1, user.getFirstName());
+			statement.setString(2, user.getLastName());
+			statement.setString(3, user.getEmail());
+			statement.setString(4, user.getAddress());
+			statement.setString(5, user.getGender());
+			statement.setString(6, user.getUserName());
+			statement.setLong(7, user.getPhoneNumber());
+			statement.setInt(8, user.getId());
+			
+		     row=statement.executeUpdate();
+		     if(row>0)
+		     {
+		    	 result="success";
+		     }
+		}
+	     
+		
+	     return result;
+	}
+
+	private boolean isPhoneNumberTakenByOther(long phoneNumber, int id) throws SQLException {
+		statement=conn.prepareStatement("select count(*) as count_id from user_details where Phonenumber=? and Id!=?");
+		statement.setLong(1, phoneNumber);
+		statement.setInt(2, id);
+		resultSet=statement.executeQuery();
+		if(resultSet.next())
+		{
+			int row_number=resultSet.getInt("count_id");
+			if(row_number>0)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isEmailTakenByOther(String email, int id) throws SQLException {
+		// TODO Auto-generated method stub
+		statement=conn.prepareStatement("select count(*) as count_id from user_details where Email=? and Id!=?");
+		statement.setString(1, email);
+		statement.setInt(2, id);
+		resultSet=statement.executeQuery();
+		if(resultSet.next())
+		{
+			int row_number=resultSet.getInt("count_id");
+			if(row_number>0)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isUsernameTakenByOther(String username, int id) throws SQLException {
+		// TODO Auto-generated method stub
+		statement=conn.prepareStatement("select count(*) as count_id from user_details where Username=? and Id != ?");
+		statement.setString(1, username);
+		statement.setInt(2, id);
+		
+		resultSet=statement.executeQuery();
+		if(resultSet.next())
+		{
+			int row_number=resultSet.getInt("count_id");
+			if(row_number>0)
+			{
+				return true;
+			}
+			
+		}
+		return false;
+	}
+		
+		
+		
+	}
+

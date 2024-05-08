@@ -14,7 +14,10 @@
 <body>
 
 	<%@ include file="includes/header.jsp"%>
-
+	
+	<!-- Spacer div to create space below the header -->
+	<div style="height: 80px;"></div>
+	
 	<div class="slider-container">
 		<div class="slider">
 			<img src="slider1.jpg" alt="Smartwatches Slider"> <img

@@ -80,6 +80,7 @@ header {
 nav {
 	display: flex;
 	align-items: center;
+	padding: 10px;
 }
 
 nav ul {
@@ -166,9 +167,10 @@ nav a:hover {
 </style>
 </head>
 <body>
+
 	<header>
 		<div class="logo">
-			<img src="<%=request.getContextPath()%>/images/logo.jpg" alt="Logo">
+			<img src="<%=request.getContextPath()%>../images/logo.jpg" alt="Logo">
 			<h3>Watch World</h3>
 		</div>
 		<div class="search-bar">
@@ -181,10 +183,12 @@ nav a:hover {
 				<li><a href="<%=request.getContextPath()%>/Product">Products</a></li>
 				<li><a href="#">About Us</a></li>
 				<%
-				Integer login_value = (session != null) ? (Integer) session.getAttribute("login_value") : null;
+				Integer loginValue = (session != null) ? (Integer) session.getAttribute("login_value") : null;
+				boolean isLoggedIn = (loginValue != null && loginValue == 1);
 				%>
 				<%
-				if (login_value != null && login_value == 1) {
+				//login value 1 means user is logged in
+				if (loginValue != null && loginValue == 1) {
 				%>
 				<li><form action="<%=request.getContextPath()%>/Logout"
 						method="post">
@@ -207,14 +211,16 @@ nav a:hover {
 			</ul>
 		</nav>
 		<div class="cart">
-			<a href="<%=request.getContextPath()%>/Cart"><i
+			<a href="#" onclick="checkLoginAndNavigate(event, '<%= request.getContextPath() %>/Cart','You need to log in to view your cart.')"><i
 				class="fa fa-shopping-bag"></i></a>
 		</div>
 	</header>
+	<script src="<%=request.getContextPath()%>/js/script.js"></script>
 	<script>
-		function confirmLogout() {
-			alert("You have logged out."); // This alert pops up when you click the logout button
-		}
+	 
+	var isLoggedIn = <%= isLoggedIn ? "true" : "false" %>;
+	 
+	setIsLoggedIn("<%= isLoggedIn ? "true" : "false" %>");
 	</script>
 </body>
 </html>

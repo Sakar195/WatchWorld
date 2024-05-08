@@ -17,6 +17,6 @@ public class MyConstants {
 	public static String VIEW_USER_PAGE = "/WEB-INF/pages/admin/viewUsers.jsp";
 	public static String UPDATE_PAGE = "/WEB-INF/pages/admin/UpdateProduct.jsp";
 	
-	public static String ERROR_PAGE = "/ErrorPage/errorPage.jsp";
+	public static String ERROR_PAGE = "/errorPage/errorPage.html";
 
 }
