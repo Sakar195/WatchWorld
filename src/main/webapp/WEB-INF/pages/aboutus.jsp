@@ -4,11 +4,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"0>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/aboutus.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <title>About Us</title>
 
 </head>
@@ -18,112 +19,88 @@
 	<!-- Spacer div to create space below the header -->
 	<div style="height: 80px;"></div>
 	<!-----content--->
-	<div class="row">
-		<div class="details">
-			<div class="img">
-				<img src="../img/srijan.jpg">
-			</div>
-			<div class="desc">
-				<h2>Sakar Paudel</h2>
-				<div class="sociallogo">
-					<a href="https://www.facebook.com/sakar.poudel.988"><img
-						src="../img/fb.png"></a> <a
-						href="https://www.instagram.com/sakar.paudel/"><img
-						src="../img/insta.png"></a> <a
-						href="https://github.com/Sakar195"><img
-						src="../img/github.png"></a>
-				</div>
-				<p>Hey guys! Thanks for visiting our website. I'm Sakar Paudel,
-					a student of computing studying at Islington College. My goal is to
-					Become the PM. I like browsing the web for new
-					technologies that come out everyday as it helps me with getting
-					great knowledge and resources. Additionally, i am an automobile
-					enthusiast</p>
-			</div>
-		</div>
-		<div class="details">
-			<div class="desc">
-				<h2>Ritesh Maharjan</h2>
-				<div class="sociallogo">
-					<a href="https://www.facebook.com/sakar.poudel.988"><img
-						src="../img/fb.png"></a> <a
-						href="https://www.instagram.com/sakar.paudel/"><img
-						src="../img/insta.png"></a> <a
-						href="https://github.com/Sakar195"><img
-						src="../img/github.png"></a>
-				</div>
-				<p>Hey guys! Thanks for visiting our website. I'm Sakar Paudel,
-					a student of computing studying at Islington College. My goal is to
-					work in a fortune 500 company. I like browsing the web for new
-					technologies that come out everyday as it helps me with getting
-					great knowledge and resources. Additionally, i am an automobile
-					enthusiast.</p>
-			</div>
-			<div class="img">
-				<img src="../img/sakar.jpg">
-			</div>
-		</div>
-		<div class="details">
-			<div class="img">
-				<img src="../img/default.png">
-			</div>
-			<div class="desc">
-				<h2>Shreeyush Dhungana</h2>
-				<div class="sociallogo">
-					<a href="https://www.facebook.com/srijan.mahrzn"><img
-						src="../img/fb.png"></a> <a
-						href="https://www.instagram.com/srijanmahrzn"><img
-						src="../img/insta.png"></a> <a href="https://www.github.com"><img
-						src="../img/github.png"></a>
-				</div>
-				<p>Hey everyone! Thanks for visiting our website. I'm Shreeyush
-					Dhungana, currently a student studying Computing at Islington
-					College. I would like to become a Software Engineer after I
-					graduate. I love travelling and I also love researching online as
-					it helps me with getting great knowledge and resources. I love
-					playing games</p>
-			</div>
-		</div>
-		<div class="details">
-			<div class="desc">
-				<h2>Bikalpa Kunwar</h2>
-				<div class="sociallogo">
-					<a href="https://www.facebook.com/bikalpa.kunwar.5"><img
-						src="../img/fb.png"></a> <a
-						href="https://www.instagram.com/bikalpaa_/"><img
-						src="../img/insta.png"></a> <a
-						href="https://github.com/Bikalpa07"><img
-						src="../img/github.png"></a>
-				</div>
-				<p>Hey everyone! Thanks for visiting our website. I’m Bikalpa
-					Kunwar, currently a student studying Computing at Islington
-					College. I would like to become a Business Tycoon after I graduate.
-					I love to travel, explore and experience new things.</p>
-			</div>
-			<div class="img">
-				<img src="../img/default.png">
-			</div>
-		</div>
-		
-	</div>
-	<div class="form">
-		<form name="feedbackform">
-			<p>
-				<label for="email">Email</label>
-			</p>
-			<input type="email" name="email" required>
-			<p>
-				<label for="phoneNumber">Phone</label>
-			</p>
-			<input type="text" name="phoneNumber" required>
-			<p>
-				<label for="textarea">Feedback </label>
-			</p>
-			<textarea style="width: 400px; height: 100px;" name="feedback" required></textarea>
-			<br>
-			<button class="button" onclick="return feed()">Submit</button>
-		</form>
-	</div>
+	<div class="section">
+        <div class="container">
+            <div class="title">
+                <h1>About Us</h1>
+            </div>
+            <div class="content-section">
+                <div class="content">
+                    <h2>Aayush Gharti</h2>
+                    <p>Highly-motivated, responsible and ambitious student with excellent time management skill and eagerness to learn something new. I have a clear, logical mind with a practical approach to problem-solving and a drive to see things through to completion.</p>
+                    <div class="social">
+                        <a href=""><i class="fab fa-facebook"></i></a>
+                        <a href=""><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="image-section">
+                    <img src="${pageContext.request.contextPath}/images/pfp1.jpg">
+                </div>
+            </div>
+            <div class="content-section">
+                <div class="content">
+                    <h2>Sakar Paudel</h2>
+                    <p>Hey guys! Thanks for visiting our website. I'm Sakar Paudel,
+                 a student of computing studying at Islington College. My goal is
+                to be the P.M. I like browsing the web for new
+                technologies that come out everyday as it helps me with getting great
+                knowledge and resources. Additionally, i am an automobile enthusiast.</p>
+                    <div class="social">
+                        <a href=""><i class="fab fa-facebook"></i></a>
+                        <a href=""><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="image-section">
+                    <img src="${pageContext.request.contextPath}/images/pfp2.jpg">
+                </div>
+            </div>
+            <div class="content-section">
+                <div class="content">
+                    <h2>Ritesh Maharjan</h2>
+                    <p>Hello everyone! Thank you for visiting the website. I'm Ritesh Maharjan. Hope you guys enjoy browsing through our website........</p>
+                    <div class="social">
+                        <a href=""><i class="fab fa-facebook"></i></a>
+                        <a href=""><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="image-section">
+                    <img src="${pageContext.request.contextPath}/images/pfp3.jpg">
+                </div>
+            </div>
+            <div class="content-section">
+                <div class="content">
+                    <h2>Navaras Shrestha</h2>
+                    <p>Greetings! Im Navaras Shrestha, an avid tech and music enjoyer. Enjoy shopping here in this site, and have a great day!</p>
+                    <div class="social">
+                        <a href=""><i class="fab fa-facebook"></i></a>
+                        <a href=""><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="image-section">
+                    <img src="${pageContext.request.contextPath}/images/pfp4.jpg">
+                </div>
+            </div>
+            <div class="content-section">
+                <div class="content">
+                    <h2>Madhu Magar</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur,
+                    vel id dolore, perferendis quisquam, non nam perspiciatis debitis
+                    vitae omnis sint in dolor nesciunt? Quas a consectetur fugiat
+                    repudiandae sequi.
+                    Aspernatur unde vero expedita facilis fuga inventore
+                    corrupti soluta omnis harum est adipisci hic, a provident.
+                    Velit quibusdam corrupti qui minima accusamus!</p>
+                    <div class="social">
+                        <a href=""><i class="fab fa-facebook"></i></a>
+                        <a href=""><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="image-section">
+                    <img src="${pageContext.request.contextPath}/images/pfp5.jpg">
+                </div>
+            </div>
+        </div>
+    </div>
 	<%@ include file="includes/footer.jsp"%>
 	<!-----script for form validation---->
 
