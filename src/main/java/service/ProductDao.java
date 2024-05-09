@@ -128,5 +128,16 @@ public class ProductDao {
 		
 		return isSuccess;
 	}
+	
+	// Method to close resources to avoid memory leaks
+    public void closeResources() {
+        try {
+            if (set != null) set.close();
+            if (st != null) st.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

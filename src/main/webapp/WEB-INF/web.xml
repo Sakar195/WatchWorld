@@ -6,10 +6,10 @@
 	<display-name>WatchWorld</display-name>
 	<welcome-file-list>
 		<welcome-file>Home</welcome-file>
-		<welcome-file>/errorPage/errorPage.html</welcome-file>
+		<welcome-file>/WEB-INF/pages/home1.jsp</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>/errorPage/errorPage.html</welcome-file>
 		<welcome-file>default.htm</welcome-file>
 	</welcome-file-list>
 

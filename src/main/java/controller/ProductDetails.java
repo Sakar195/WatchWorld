@@ -42,7 +42,7 @@ public class ProductDetails extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int id = Integer.valueOf(request.getParameter("id"));
+		int id = Integer.valueOf(request.getParameter("product_id"));
 
 		HttpSession session = request.getSession(false); // Get the current session
 		System.out.println("works1");
@@ -50,12 +50,14 @@ public class ProductDetails extends HttpServlet {
 			// No session, redirect to a login or error page
 			response.sendRedirect(request.getContextPath() + "/Login");
 		}
+		
+		
 
 		else {
 			// ID exists, Fetch a product by ID and forward ProductDetails page
 			product Product;
 			try {
-				
+				System.out.println("userName"+session.getAttribute("username"));
 				Product = dao.getProductById(id);
 				System.out.println("this is the product id"+id);
 				request.setAttribute("Product", Product);
@@ -66,7 +68,7 @@ public class ProductDetails extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			session.setAttribute("id", id);
+			//session.setAttribute("id", id);
 
 			System.out.println("works3");
 		}

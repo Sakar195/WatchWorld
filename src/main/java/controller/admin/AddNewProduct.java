@@ -21,7 +21,7 @@ import service.ProductDao;
  * Servlet implementation class AddNewProduct
  */
 @WebServlet(asyncSupported = true, urlPatterns = { "/AddProduct" })
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 5, // 5MB
 maxFileSize = 1024 * 1024 * 10,      // 10MB
 maxRequestSize = 1024 * 1024 * 50)  // 50MB
 public class AddNewProduct extends HttpServlet {

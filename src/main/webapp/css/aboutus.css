@@ -1,0 +1,62 @@
+@charset "UTF-8";
+.row {
+	padding: 20px 50px;
+	flex-direction: row;
+	justify-content: unset;
+}
+
+.row .sociallogo img {
+	padding-right: 15px;
+	margin-top: 5px;
+	margin-bottom: 3px;
+}
+
+.img {
+	flex-basis: 20%;
+}
+
+.img img {
+	max-width: 100%;
+	clip-path: circle();
+	width: 200px;
+}
+
+a img {
+	height: 30px;
+}
+
+.desc {
+	flex-basis: 80%;
+	padding: 10px 50px;
+}
+
+.details {
+	display: flex;
+	padding: 20px 0px;
+}
+
+.form {
+	padding: 0 100px;
+}
+
+.form button {
+	padding: 5px 5px;
+	margin-bottom: 10px;
+	font-size: 15px;
+}
+
+input {
+	border-radius: 4px;
+}
+
+textarea {
+	border-radius: 4px;
+}
+
+.sociallogo img:hover {
+	transform: translateY(-5px);
+}
+
+.sociallogo img {
+	transition: transform .5s;
+}

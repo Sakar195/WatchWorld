@@ -10,6 +10,8 @@ public class MyConstants {
 	public static String CART_PAGE = "/WEB-INF/pages/cart.jsp";
 	public static String PROFILE_PAGE = "/WEB-INF/pages/profile.jsp";
 	
+	public static String ABOUTUS_PAGE = "/WEB-INF/pages/aboutus.jsp";
+	
 	public static String ADMIN_PAGE = "/WEB-INF/pages/admin/adminPanel.jsp";
 	public static String ADDPRODUCT_PAGE = "/WEB-INF/pages/admin/addProduct.jsp";
 	public static String VIEWPRODUCT_PAGE = "/WEB-INF/pages/admin/viewProduct.jsp";

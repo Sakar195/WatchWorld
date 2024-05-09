@@ -284,5 +284,16 @@ public class UserDao {
 		return false;
 
 	}
+	
+	// Method to close resources to avoid memory leaks
+    public void closeResources() {
+        try {
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -181,7 +181,7 @@ nav a:hover {
 			<ul>
 				<li><a href="<%=request.getContextPath()%>/Home">Home</a></li>
 				<li><a href="<%=request.getContextPath()%>/Product">Products</a></li>
-				<li><a href="#">About Us</a></li>
+				<li><a href="<%=request.getContextPath()%>/About">About Us</a></li>
 				<%
 				Integer loginValue = (session != null) ? (Integer) session.getAttribute("login_value") : null;
 				boolean isLoggedIn = (loginValue != null && loginValue == 1);

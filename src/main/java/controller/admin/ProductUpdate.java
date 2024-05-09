@@ -62,15 +62,15 @@ public class ProductUpdate extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		HttpSession session = request.getSession(false);
-		Integer id = null;
-		if (session == null || session.getAttribute("") == null) {
+		Integer product_id = null;
+		if (session == null || session.getAttribute("product_id") == null) {
 		    // Session is invalid or the attribute doesn't exist, handle appropriately
 		    response.sendRedirect(request.getContextPath() + "/Login"); // Redirect to login or error page
 		    System.out.println("getting seeion");
 		    return;
 		} else {
 		    
-		    id = (int) session.getAttribute("id"); // Only cast if not null
+		    product_id = (int) session.getAttribute("product_id"); // Only cast if not null
 		    System.out.println("getting id");
 		    
 		}
@@ -97,7 +97,7 @@ public class ProductUpdate extends HttpServlet {
 			product existingProduct;
 			//if user doesnt upload image, retrieving values form object to set into database
 			try {
-				existingProduct = dao.getProductById(id);
+				existingProduct = dao.getProductById(product_id);
 				if (existingProduct != null) {
 					imageData = existingProduct.getImage_data();
 					imageName = existingProduct.getImage_name();
@@ -112,7 +112,7 @@ public class ProductUpdate extends HttpServlet {
 
 		product Product = new product();
 
-		Product.setId(id);
+		Product.setId(product_id);
 		Product.setImage_data(imageData);
 		Product.setImage_name(imageName);
 		Product.setName(request.getParameter("productName"));

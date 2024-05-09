@@ -15,7 +15,6 @@ import appConstant.MyConstants;
 import model.product;
 import service.ProductDao;
 
-
 @WebServlet(asyncSupported = true, urlPatterns = { "/Edit" })
 public class ProductEdit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,47 +32,36 @@ public class ProductEdit extends HttpServlet {
 		super();
 	}
 
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		int id = Integer.valueOf(request.getParameter("id"));
-		System.out.println(id);
+		int product_id = Integer.valueOf(request.getParameter("id"));
+		System.out.println(product_id);
 
+		HttpSession session = request.getSession(false); // Get the current session
+		System.out.println("works1");
+
+		// ID exists, Fetch a product by ID and forward to an update page
+		System.out.println("works5");
+		product Product;
 		try {
+			Product = dao.getProductById(product_id);
+			session.setAttribute("product_id", product_id);
 
-			HttpSession session = request.getSession(false); // Get the current session
-			System.out.println("works1");
-			if (session == null) {
-				// No session, redirect to a login or error page
-				response.sendRedirect(request.getContextPath() + "/Login");
-				System.out.println("works2");
-			}
-
-			else {
-				// ID exists, Fetch a product by ID and forward to an update page
-				System.out.println("works5");
-				product Product = dao.getProductById(id);
-				
-				session.setAttribute("id", id);
-				
-				System.out.println("works6");
-				request.setAttribute("Product", Product);
-				request.getRequestDispatcher(MyConstants.UPDATE_PAGE).forward(request, response);
-				System.out.println("works3");
-			}
-
-		} catch (
-
-		SQLException e) {
-			System.out.println("edit servlet failed");
+			System.out.println("works6");
+			request.setAttribute("Product", Product);
+			request.getRequestDispatcher(MyConstants.UPDATE_PAGE).forward(request, response);
+			System.out.println("works3");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		
+
 	}
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub

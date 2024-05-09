@@ -8,29 +8,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import appConstant.MyConstants;
-import service.OrderDao;
 
 /**
- * Servlet implementation class CartPage
+ * Servlet implementation class AboutUs
  */
-@WebServlet(asyncSupported = true, urlPatterns = { "/Cart" })
-public class CartPage extends HttpServlet {
+@WebServlet(asyncSupported = true, urlPatterns = { "/About" })
+public class AboutUs extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private OrderDao dao;
        
-    
-    public CartPage() {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AboutUs() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher(MyConstants.CART_PAGE).forward(request, response);
+		request.getRequestDispatcher(MyConstants.ABOUTUS_PAGE).forward(request, response);
 	}
 
-	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
