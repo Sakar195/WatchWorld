@@ -7,18 +7,25 @@
 <title>Login</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/login.css">
+<style>
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url("<%= request.getContextPath() %>/images/Login.png"); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  display: flex; /* Flex container */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+</style>
 </head>
 <body>
 	<%@ include file="includes/header.jsp"%>
 	<div class="container">
-		<!-- Place image on the left -->
-		<div class="login-image">
-			<img src="${pageContext.request.contextPath}/images/Login.png"
-				alt="Login Image" >
-			<!-- Ensure the path is correct -->
-		</div>
-
-		<!-- Place login box on the right -->
 		<div class="login-box">
 			<h2>Login</h2>
 			<form action="${pageContext.request.contextPath}/Login" method="post">
@@ -57,6 +64,7 @@
 			</form>
 		</div>
 	</div>
+	<div class="height:80px"></div>
 	<%@ include file="includes/footer.jsp"%>
 </body>
 </html>

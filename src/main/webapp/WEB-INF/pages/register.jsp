@@ -11,7 +11,21 @@
 <style>
 #role {
 	width: 150px;
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+    margin-top: 40px;
+    background-image: url('<%= request.getContextPath() %>/images/Login.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    justify-content: center;
+  	height: 90vh;
+    display: flex;
+    flex-direction: column; 
 }
+
 </style>
 </head>
 <body>

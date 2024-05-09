@@ -134,6 +134,14 @@ body {
 			style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;">
 			Item successfully added to cart!</div>
 	</c:if>
+	<!-- Check if there was an error indicating the item already exists in the cart -->
+	<c:if
+		test="${param.added_to_cart == 'false' && param.cart_error == 'item_already_exists'}">
+		<div class="filter-form"
+			style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;">
+			Item already exists in the cart.</div>
+	</c:if>
+
 
 
 	<div class="container">
@@ -169,7 +177,7 @@ body {
 							<form action="${pageContext.request.contextPath}/AddCart"
 								method="post">
 								<input type="hidden" name="product_id" value="${product.id}" />
-								<input type="hidden" name="referrer"value="product" />
+								<input type="hidden" name="referrer" value="product" />
 								<button
 									onclick="checkLoginAndNavigate(event, '<%=request.getContextPath()%>/AddCart', 'You need to log in to buy this product.')">Add
 									to Cart</button>

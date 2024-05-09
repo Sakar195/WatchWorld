@@ -149,8 +149,8 @@ div[style] {
 				<!-- Button to buy the product -->
 				<form action="${pageContext.request.contextPath}/AddCart"
 					method="post">
-					<input type="hidden" name="product_id" value="${Product.id}" />
-					<input type="hidden" name="referrer" value="productDetails" />
+					<input type="hidden" name="product_id" value="${Product.id}" /> <input
+						type="hidden" name="referrer" value="productDetails" />
 					<button class="buy-button"
 						onclick="checkLoginAndNavigate(event, '<%=request.getContextPath()%>/AddCart', 'You need to log in to buy this product.')">Add
 						to Cart</button>
@@ -160,6 +160,13 @@ div[style] {
 						<div
 							style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;">
 							Item successfully added to cart!</div>
+					</c:if>
+					<!-- Check if there was an error indicating the item already exists in the cart -->
+					<c:if
+						test="${param.added_to_cart == 'false' && param.cart_error == 'item_already_exists'}">
+						<div
+							style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;">
+							Item already exists in the cart.</div>
 					</c:if>
 				</form>
 			</div>

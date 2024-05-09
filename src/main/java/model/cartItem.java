@@ -3,53 +3,52 @@ package model;
 import java.time.LocalDate;
 
 public class cartItem {
-	private int cartId;
+    private int cartId;
     private int productId;
+    private String productName;
     private int quantity;
     private LocalDate addedDate;
-	
-    public cartItem(int cartId, int productId, int quantity, LocalDate addedDate) {
-		super();
-		this.cartId = cartId;
-		this.productId = productId;
-		this.quantity = quantity;
-		this.addedDate = addedDate;
-	}
+    private String productImage; // Base64-encoded
+    private int productPrice; 
 
-	public int getCartId() {
-		return cartId;
-	}
+    public cartItem(int cartId, int productId, String productName, int quantity, LocalDate addedDate, String productImage, int productPrice) {
+        this.cartId = cartId;
+        this.productId = productId;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.addedDate = addedDate;
+        this.productImage = productImage;
+        this.productPrice = productPrice; // Store the price
+    }
 
-	public void setCartId(int cartId) {
-		this.cartId = cartId;
-	}
+    // Getters and other methods
+    public int getCartId() {
+        return cartId;
+    }
 
-	public int getProductId() {
-		return productId;
-	}
+    public int getProductId() {
+        return productId;
+    }
 
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
+    public String getProductName() {
+        return productName;
+    }
 
-	public int getQuantity() {
-		return quantity;
-	}
+    public int getQuantity() {
+        return quantity;
+    }
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+    public LocalDate getAddedDate() {
+        return addedDate;
+    }
 
-	public LocalDate getAddedDate() {
-		return addedDate;
-	}
+    public String getProductImage() {
+        return productImage;
+    }
 
-	public void setAddedDate(LocalDate addedDate) {
-		this.addedDate = addedDate;
-	}
-    
-    
-    
-    
-
+    public int getProductPrice() {
+        return productPrice; // Getter for price
+    }
 }
+    
+    

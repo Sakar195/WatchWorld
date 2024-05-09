@@ -1,98 +1,113 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Order</title>
+<title>Orders</title>
 <style>
+/* Basic styling for the table and other elements */
 body {
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-	background-color: #f4f4f4;
-}
-
-.container {
-	max-width: 70%;
-	margin: 20px auto;
-	padding: 20px;
-	background-color: #fff;
-	border-radius: 5px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-	text-align: left;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    margin: 20px;
 }
 
 table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Box shadow for modern look */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Hide overflow for smooth corners */
 }
 
 th, td {
-	padding: 10px;
-	border-bottom: 1px solid #ddd;
-	text-align: left;
+    padding: 12px; /* Increased padding for better readability */
+    text-align: left;
 }
 
 th {
-	background-color: #f2f2f2;
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Lighter color for alternating rows */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* Hover effect for improved interactivity */
 }
 
 .status {
-	color: #fff;
-	padding: 5px 10px;
-	border-radius: 5px;
-	text-align: center;
+    color: white;
+    padding: 8px 15px; /* More padding for emphasis */
+    font-weight: bold; /* Bold for emphasis */
+    border-radius: 15px; /* Rounded corners for status badge */
 }
 
 .pending {
-	background-color: #ff9800; /* orange */
+    background-color: #ff9800; /* Orange for pending */
 }
 
 .completed {
-	background-color: #4caf50; /* green */
+    background-color: #4CAF50; /* Green for completed */
+}
+
+.in-progress {
+    background-color: #FFEB3B; /* Yellow for in-progress */
+}
+
+/* Style for Go Back button */
+.go-back {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px; /* Rounded corners */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.go-back:hover {
+    background-color: #45a049; /* Darker green on hover */
 }
 </style>
 </head>
 <body>
-	<div class="container">
-		<h1>Order</h1>
-		<table>
-			<thead>
-			<tr>
-				<th>Order ID</th>
-				<th>Customer Name</th>
-				<th>Ordered Items</th>
-				<th>Total Price</th>
-				<th>Ordered Date</th>
-				<th>Status</th>
-			</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td>John Doe</td>
-					<td>Product A, Product B</td>
-					<td>$50.00</td>
-					<td>2024-04-28</td>
-					<td><span class="status pending">Pending</span></td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>Jane Smith</td>
-					<td>Product C</td>
-					<td>$25.00</td>
-					<td>2024-04-27</td>
-					<td><span class="status completed">Completed</span></td>
-				</tr>
-				<!-- Add more rows as needed -->
-			</tbody>
-		</table>
-	</div>
+    <div>
+        <h1>All Orders</h1>
+        <!-- Go Back button leading to the admin page -->
+        <a href="<%=request.getContextPath()%>/admin" class="go-back">Go Back</a>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Order Date</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="order" items="${orders}">
+                    <tr>
+                        <td>${order.getOrderId()}</td>
+                        <td>${order.getCustomerName()}</td>
+                        <td>${order.getOrderDate()}</td>
+                        <td>$${order.getTotalAmount()}</td>
+                        <td>
+                            <span class="status ${order.getStatus().toLowerCase()}">${order.getStatus()}</span>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

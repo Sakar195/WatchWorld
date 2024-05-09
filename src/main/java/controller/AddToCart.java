@@ -51,9 +51,18 @@ public class AddToCart extends HttpServlet {
 			return;
 		}
 		Integer userId = (Integer) session.getAttribute("userId");
-		System.out.println("this is the user id" + userId);
-		int productId = Integer.parseInt(request.getParameter("product_id"));
-		System.out.println("this is the product ID" + productId);
+		String productIdStr = request.getParameter("product_id");
+		if (productIdStr == null || productIdStr.isEmpty()) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Product ID is missing or invalid.");
+			return;
+		}
+		int productId;
+		try {
+			productId = Integer.parseInt(productIdStr);
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Product ID.");
+			return;
+		}
 
 		// String status = "order Placed";
 		// String status = "Shipped";
@@ -62,20 +71,27 @@ public class AddToCart extends HttpServlet {
 		// LocalDate currentDate = LocalDate.now();
 		// System.out.println("Current date and time: " + currentDate);
 		String referrer = request.getParameter("referrer"); // Get the referrer parameter
-		
 
 		try {
 			boolean success = false;
 			success = dao.addCartItem(userId, productId, 1);
 			if (success) {
 				if (referrer.equals("productDetails")) {
-					response.sendRedirect(request.getContextPath() + "/Details?product_id="+productId+"&added_to_cart=true");
+					response.sendRedirect(
+							request.getContextPath() + "/Details?product_id=" + productId + "&added_to_cart=true");
 				} else {
-					response.sendRedirect(request.getContextPath() + "/Product?added_to_cart=true");
+					response.sendRedirect(request.getContextPath() + "/Product?added_to_cart=true&cart_error=item_already_exists");
 				}
 				System.out.println(referrer);
 			} else {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to add item to cart.");
+				session.setAttribute("cartMessage", "Item already exists in the cart.");
+				if (referrer.equals("productDetails")) {
+					response.sendRedirect(
+							request.getContextPath() + "/Details?product_id=" + productId + "&added_to_cart=false&cart_error=item_already_exists");
+				} else {
+					response.sendRedirect(request.getContextPath() + "/Product?added_to_cart=false");
+				}
+				System.out.println(referrer);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
