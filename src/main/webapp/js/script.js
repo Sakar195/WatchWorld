@@ -24,7 +24,44 @@ function confirmLogout() {
     alert("You have logged out.");
 }
 
-// Example of assigning the `isLoggedIn` variable from server-side data (optional step)
+// assigning the `isLoggedIn` variable from server-side 
 function setIsLoggedIn(value) {
     isLoggedIn = value === "true";
 }
+
+// profile.js
+
+$(document).ready(function() {
+    // Initialize all forms' visibility
+    $(".change-password-form").hide();
+    $(".account").show();
+
+    // Click event for the "Account" menu item
+    $(".account-button").click(function(e) {
+        e.preventDefault();
+        $(".account").show();
+        $(".change-password-form").hide();
+
+        // Handle active class
+        $(".menu-link").removeClass("active");
+        $(this).addClass("active");
+    });
+
+    // Click event for the "Change Password" menu item
+    $(".change-password-button").click(function(e) {
+        e.preventDefault();
+        $(".account").hide();
+        $(".change-password-form").show();
+
+        // Handle active class
+        $(".menu-link").removeClass("active");
+        $(this).addClass("active");
+    });
+
+    // Click event for other menu items
+    $(".menu-link").click(function(e) {
+        // Handle active class for other menu links
+        $(".menu-link").removeClass("active");
+        $(this).addClass("active");
+    });
+});

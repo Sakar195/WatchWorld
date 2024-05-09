@@ -11,39 +11,43 @@
 	href="<%=request.getContextPath()%>/css/profile.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Include jQuery for convenience -->
+
+<script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script>
-$(document).ready(function() {
-    // Show the account form by default and hide the change password form
-    $(".change-password-form").hide();
-    $(".account").show();
+	$(document).ready(function() {
+		// Initialize all forms' visibility
+		$(".change-password-form").hide();
+		$(".account").show();
 
-    // Click event for the "Account" menu item
-    $(".account-button").click(function(e) {
-        e.preventDefault(); // Prevent default anchor behavior
+		// Click event for the "Account" menu item
+		$(".account-button").click(function(e) {
+			e.preventDefault();
+			$(".account").show();
+			$(".change-password-form").hide();
 
-        // Show the account form and hide the change password form
-        $(".account").show(); // Show the account form
-        $(".change-password-form").hide(); // Hide the change password form
-    });
+			// Handle active class
+			$(".menu-link").removeClass("active");
+			$(this).addClass("active");
+		});
 
-    // Click event for the "Change Password" menu item
-    $(".change-password-button").click(function(e) {
-        e.preventDefault(); // Prevent default anchor behavior
+		// Click event for the "Change Password" menu item
+		$(".change-password-button").click(function(e) {
+			e.preventDefault();
+			$(".account").hide();
+			$(".change-password-form").show();
 
-        // Hide the account form and show the change password form
-        $(".account").hide(); // Hide the account form
-        $(".change-password-form").show(); // Show the change password form
-    });
-});
-$(".menu-link").click(function(e) {
-    // Only change active class when not account or change-password
-    if (!$(this).hasClass("account-button") && !$(this).hasClass("change-password-button")) {
-        $(".menu-link").removeClass("active");
-        $(this).addClass("active");
-    }
-});
+			// Handle active class
+			$(".menu-link").removeClass("active");
+			$(this).addClass("active");
+		});
 
-
+		// Click event for other menu items
+		$(".menu-link").click(function(e) {
+			// Handle active class for other menu links
+			$(".menu-link").removeClass("active");
+			$(this).addClass("active");
+		});
+	});
 </script>
 </head>
 <body>
@@ -54,7 +58,7 @@ $(".menu-link").click(function(e) {
 			<div class="profile-header">
 
 				<div class="profile-text-container">
-					<h1 class="profile-title">${user.userName}</h1>
+					<h1 class="profile-title">${sessionScope.username}</h1>
 				</div>
 			</div>
 
@@ -70,6 +74,10 @@ $(".menu-link").click(function(e) {
 				<a href="#" class="menu-link">Payment Option</a>
 				<!--icon halam-->
 				<a href="#" class="menu-link">History</a>
+				<c:if test="${sessionScope.role_id == 1}">
+					<a href="<%=request.getContextPath()%>/admin" class="menu-link">Admin
+						Panel</a>
+				</c:if>
 
 				<!-- This is the logout link -->
 				<form action="<%=request.getContextPath()%>/Logout" method="post">
@@ -121,13 +129,14 @@ $(".menu-link").click(function(e) {
 			<div class="account-edit">
 				<div class="input-container">
 					<label for="gender">Gender:</label> <select id="gender"
-						name="gender" required>
-
-						<option value="male" ${user.gender=='male'?'selected':'' }>Male</option>
-						<option value="female" ${user.gender=='female'?'selected':'' }>Female</option>
+						name="gender" required
+						style="height: 40px; padding: 10px; font-size: 16px;">
+						<option value="male" ${user.gender == 'male' ? 'selected' : ''}>Male</option>
+						<option value="female"
+							${user.gender == 'female' ? 'selected' : ''}>Female</option>
 					</select>
 					<!-- Debugging -->
-					<p>Gender value: ${user.gender}</p>
+
 				</div>
 				<div class="input-container">
 					<label for="username">Username:</label> <input type="text"
@@ -158,29 +167,29 @@ $(".menu-link").click(function(e) {
 		<c:choose>
 			<c:when test="${errorSource == 'change-password'}">
 				<script>
-	        $(document).ready(function() {
-	            // Hide the account form and show the change password form
-	            $(".account").hide();
-	            $(".change-password-form").show();
-	            
-	            // Set active menu item to change password
-	            $(".menu-link").removeClass("active");
-	            $(".change-password-button").addClass("active");
-	        });
-	        </script>
+					$(document).ready(function() {
+						// Hide the account form and show the change password form
+						$(".account").hide();
+						$(".change-password-form").show();
+
+						// Set active menu item to change password
+						$(".menu-link").removeClass("active");
+						$(".change-password-button").addClass("active");
+					});
+				</script>
 			</c:when>
 			<c:otherwise>
 				<script>
-			        $(document).ready(function() {
-			            // Show the account form by default
-			            $(".account").show();
-			            $(".change-password-form").hide();
-			            
-			            // Set active menu item to account
-			            $(".menu-link").removeClass("active");
-			            $(".account-button").addClass("active");
-			        });
-        		</script>
+					$(document).ready(function() {
+						// Show the account form by default
+						$(".account").show();
+						$(".change-password-form").hide();
+
+						// Set active menu item to account
+						$(".menu-link").removeClass("active");
+						$(".account-button").addClass("active");
+					});
+				</script>
 			</c:otherwise>
 		</c:choose>
 
@@ -222,6 +231,11 @@ $(".menu-link").click(function(e) {
 			<c:if test="${not empty errorMessage}">
 				<p style="color: red">
 					<c:out value="${errorMessage}" />
+				</p>
+			</c:if>
+			<c:if test="${not empty message}">
+				<p style="color: green">
+					<c:out value="${message}" />
 				</p>
 			</c:if>
 

@@ -95,6 +95,8 @@ body {
 				<li><a href="<%=request.getContextPath()%>/AddProduct">Add New Product</a></li>
 				<li><a href="<%=request.getContextPath()%>/Users">Users</a></li>
 				<li><a href="<%=request.getContextPath()%>/Orders">Orders</a></li>
+				<li><a href="<%=request.getContextPath()%>/Profile">Go Back</a></li>
+				
 			</ul>
 			<form action="<%=request.getContextPath()%>/Logout" method="post">
 			<button type="submit"   class="button" onclick="confirmLogout()">Logout</button>

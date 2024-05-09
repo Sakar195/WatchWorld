@@ -11,11 +11,16 @@
 <body>
 	<%@ include file="includes/header.jsp"%>
 	<div class="container">
-		<div class="login-image"></div>
+		<!-- Place image on the left -->
+		<div class="login-image">
+			<img src="${pageContext.request.contextPath}/images/Login.png"
+				alt="Login Image" >
+			<!-- Ensure the path is correct -->
+		</div>
+
+		<!-- Place login box on the right -->
 		<div class="login-box">
 			<h2>Login</h2>
-
-			<!-- Make sure the form tag wraps all the input fields and the submit button -->
 			<form action="${pageContext.request.contextPath}/Login" method="post">
 				<div class="row">
 					<div class="col">
@@ -31,25 +36,22 @@
 							placeholder="Enter your Password Here" required>
 					</div>
 				</div>
-
 				<div class="row">
 					<div class="col">
 						<button type="submit" name="login-button" class="login-button">Login</button>
 					</div>
 				</div>
-
-
 				<div class="row">
 					<div class="col">
 						<a href="<%=request.getContextPath()%>/Registration"
 							style="color: green">SignUp</a>
-					<%
-					if (request.getAttribute("error") != null) {
-					%>
+						<%
+						if (request.getAttribute("error") != null) {
+						%>
 						<p style="color: red"><%=request.getAttribute("error")%></p>
 						<%
-					}
-					%>	
+						}
+						%>
 					</div>
 				</div>
 			</form>

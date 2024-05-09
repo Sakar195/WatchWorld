@@ -95,7 +95,6 @@ public class UserDao {
 		return row;
 	}
 
-
 	public List<Integer> userLogin(String username, String password) throws SQLException {
 
 		List<Integer> userDetails = new ArrayList<Integer>();
@@ -171,28 +170,22 @@ public class UserDao {
 	}
 
 	public String updateUser(User user) throws SQLException {
-		int row=0;
-		String result="fail";
-		
-		if(isUsernameTakenByOther(user.getUserName(),user.getId()))
-		{
+		int row = 0;
+		String result = "fail";
+
+		if (isUsernameTakenByOther(user.getUserName(), user.getId())) {
 			result = "UsernameTakenByOther";
 			return result;
-		}
-		else if(isEmailTakenByOther(user.getEmail(),user.getId()))
-		{
+		} else if (isEmailTakenByOther(user.getEmail(), user.getId())) {
 			result = "EmailTakenByOther";
 			return result;
-		}
-		else if(isPhoneNumberTakenByOther(user.getPhoneNumber(),user.getId()))
-		{
+		} else if (isPhoneNumberTakenByOther(user.getPhoneNumber(), user.getId())) {
 			result = "PhoneNumberTakenByOther";
 			return result;
-		}
-		else
-		{
-			statement=conn.prepareStatement("update user_details set Firstname=?,Lastname=?,Email=?,Address=?,Gender=?,Username=?,Phonenumber=? where Id=?");
-		
+		} else {
+			statement = conn.prepareStatement(
+					"update user_details set Firstname=?,Lastname=?,Email=?,Address=?,Gender=?,Username=?,Phonenumber=? where Id=?");
+
 			statement.setString(1, user.getFirstName());
 			statement.setString(2, user.getLastName());
 			statement.setString(3, user.getEmail());
@@ -201,28 +194,25 @@ public class UserDao {
 			statement.setString(6, user.getUserName());
 			statement.setLong(7, user.getPhoneNumber());
 			statement.setInt(8, user.getId());
-			
-		     row=statement.executeUpdate();
-		     if(row>0)
-		     {
-		    	 result="success";
-		     }
+
+			row = statement.executeUpdate();
+			if (row > 0) {
+				result = "success";
+			}
 		}
-	     
-		
-	     return result;
+
+		return result;
 	}
 
 	private boolean isPhoneNumberTakenByOther(long phoneNumber, int id) throws SQLException {
-		statement=conn.prepareStatement("select count(*) as count_id from user_details where Phonenumber=? and Id!=?");
+		statement = conn
+				.prepareStatement("select count(*) as count_id from user_details where Phonenumber=? and Id!=?");
 		statement.setLong(1, phoneNumber);
 		statement.setInt(2, id);
-		resultSet=statement.executeQuery();
-		if(resultSet.next())
-		{
-			int row_number=resultSet.getInt("count_id");
-			if(row_number>0)
-			{
+		resultSet = statement.executeQuery();
+		if (resultSet.next()) {
+			int row_number = resultSet.getInt("count_id");
+			if (row_number > 0) {
 				return true;
 			}
 		}
@@ -231,15 +221,13 @@ public class UserDao {
 
 	private boolean isEmailTakenByOther(String email, int id) throws SQLException {
 		// TODO Auto-generated method stub
-		statement=conn.prepareStatement("select count(*) as count_id from user_details where Email=? and Id!=?");
+		statement = conn.prepareStatement("select count(*) as count_id from user_details where Email=? and Id!=?");
 		statement.setString(1, email);
 		statement.setInt(2, id);
-		resultSet=statement.executeQuery();
-		if(resultSet.next())
-		{
-			int row_number=resultSet.getInt("count_id");
-			if(row_number>0)
-			{
+		resultSet = statement.executeQuery();
+		if (resultSet.next()) {
+			int row_number = resultSet.getInt("count_id");
+			if (row_number > 0) {
 				return true;
 			}
 		}
@@ -248,24 +236,53 @@ public class UserDao {
 
 	private boolean isUsernameTakenByOther(String username, int id) throws SQLException {
 		// TODO Auto-generated method stub
-		statement=conn.prepareStatement("select count(*) as count_id from user_details where Username=? and Id != ?");
+		statement = conn.prepareStatement("select count(*) as count_id from user_details where Username=? and Id != ?");
 		statement.setString(1, username);
 		statement.setInt(2, id);
-		
-		resultSet=statement.executeQuery();
-		if(resultSet.next())
-		{
-			int row_number=resultSet.getInt("count_id");
-			if(row_number>0)
-			{
+
+		resultSet = statement.executeQuery();
+		if (resultSet.next()) {
+			int row_number = resultSet.getInt("count_id");
+			if (row_number > 0) {
 				return true;
 			}
-			
+
 		}
 		return false;
 	}
-		
-		
-		
+
+	public boolean changePassword(int userId, String oldPassword, String newPassword) throws SQLException {
+
+		statement = conn.prepareStatement("SELECT Password FROM user_details WHERE Id = ?");
+		statement.setInt(1, userId);
+		resultSet = statement.executeQuery();
+		if (resultSet.next()) {
+			String storedPasswordHash = resultSet.getString("Password");
+
+			// Check if the provided oldPassword matches the stored hashed password
+			if (PasswordHash.checkPassword(oldPassword, storedPasswordHash)) {
+				// If passwords match, update the password with the new hashed password
+				String newPasswordHash = PasswordHash.getPasswordHash(newPassword);
+
+				// Update the password in the database
+				String updateQuery = "UPDATE user_details SET Password = ? WHERE Id = ?";
+				PreparedStatement updateStatement = conn.prepareStatement(updateQuery);
+				updateStatement.setString(1, newPasswordHash);
+				updateStatement.setInt(2, userId);
+
+				// Execute the update statement
+				int row_number= updateStatement.executeUpdate();
+				if (row_number > 0) {
+					return true;
+				}
+				
+			}
+			else {
+		        System.out.print("User with ID " + userId + " not found.");
+		    }
+		}
+		return false;
+
 	}
 
+}

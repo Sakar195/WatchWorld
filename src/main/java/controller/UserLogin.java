@@ -36,7 +36,7 @@ public class UserLogin extends HttpServlet {
 
     public UserLogin() {
         super();
-        DatabaseConnectivity.getDbConnection();
+        
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -67,10 +67,11 @@ public class UserLogin extends HttpServlet {
                 session.setAttribute("userId", id);
                 session.setAttribute("username", username);
                 session.setAttribute("role_id", role_id);
+                session.setAttribute("login_value", login_value);
                 session.setMaxInactiveInterval(30 * 60);
 
                 if (role_id == 1) { // Admin
-                    response.sendRedirect(request.getContextPath() + "/admin");
+                    response.sendRedirect(request.getContextPath() + "/Profile");
                     return;
                 } else if (role_id == 2) { // User
                     response.sendRedirect(request.getContextPath() + "/Home");
