@@ -170,7 +170,7 @@ nav a:hover {
 
 	<header>
 		<div class="logo">
-			<img src="<%=request.getContextPath()%>../images/logo.jpg" alt="Logo">
+			<img src="<%=request.getContextPath()%>/images/logo.jpg" alt="Logo">
 			<h3>Watch World</h3>
 		</div>
 		<div class="search-bar">

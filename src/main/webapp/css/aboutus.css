@@ -1,62 +1,109 @@
 @charset "UTF-8";
-.row {
-	padding: 20px 50px;
-	flex-direction: row;
-	justify-content: unset;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-.row .sociallogo img {
-	padding-right: 15px;
-	margin-top: 5px;
-	margin-bottom: 3px;
+
+body {
+    font-family: Arial, sans-serif;
 }
 
-.img {
-	flex-basis: 20%;
+.container {
+    width: 80%;
+    margin: auto;
+    padding-top: 50px;
 }
 
-.img img {
-	max-width: 100%;
-	clip-path: circle();
-	width: 200px;
+.title {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-a img {
-	height: 30px;
+.content-section {
+    display: flex;
+    margin-bottom: 40px;
 }
 
-.desc {
-	flex-basis: 80%;
-	padding: 10px 50px;
+.content {
+    flex: 1;
 }
 
-.details {
-	display: flex;
-	padding: 20px 0px;
+.content h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.content p {
+    color: #666;
+}
+
+.social {
+    margin-top: 20px;
+}
+
+.social a {
+    margin-right: 10px;
+    color: #666;
+}
+
+.image-section {
+    flex: 1;
+    text-align: center;
+}
+
+.image-section img {
+    max-width: 30%;
+    height: auto;
+    border-radius: 50%;
 }
 
 .form {
-	padding: 0 100px;
+    margin-top: 50px;
+    text-align: center;
 }
 
-.form button {
-	padding: 5px 5px;
-	margin-bottom: 10px;
-	font-size: 15px;
+form {
+    max-width: 400px;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-input {
-	border-radius: 4px;
+form p {
+    text-align: left;
+    margin-bottom: 10px;
 }
 
-textarea {
-	border-radius: 4px;
+form label {
+    display: block;
+    margin-bottom: 5px;
 }
 
-.sociallogo img:hover {
-	transform: translateY(-5px);
+form input[type="email"],
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
 }
 
-.sociallogo img {
-	transition: transform .5s;
+form button {
+    background-color: #0678e2;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0063c1;
 }

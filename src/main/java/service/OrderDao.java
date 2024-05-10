@@ -135,27 +135,27 @@ public class OrderDao {
 	public void deleteCartItem(int userId, int productId) throws SQLException {
 		conn.setAutoCommit(false); // Start a transaction
 
-	    try {
-	        // First, clear any dependent references (like Order_Items) if needed
-	        String deleteOrderItemsQuery = "DELETE FROM Order_Items WHERE Product_Id = ?";
-	        st = conn.prepareStatement(deleteOrderItemsQuery);
-	        st.setInt(1, productId);
-	        st.executeUpdate();
+		try {
+			// First, clear any dependent references (like Order_Items) if needed
+			String deleteOrderItemsQuery = "DELETE FROM Order_Items WHERE Product_Id = ?";
+			st = conn.prepareStatement(deleteOrderItemsQuery);
+			st.setInt(1, productId);
+			st.executeUpdate();
 
-	        // Now, delete from cart_items
-	        String deleteCartItemsQuery = "DELETE FROM cart_items WHERE product_id = ? AND cart_id = (SELECT cart_id FROM cart WHERE user_id = ?)";
-	        st = conn.prepareStatement(deleteCartItemsQuery);
-	        st.setInt(1, productId);
-	        st.setInt(2, userId);
-	        st.executeUpdate();
+			// Now, delete from cart_items
+			String deleteCartItemsQuery = "DELETE FROM cart_items WHERE product_id = ? AND cart_id = (SELECT cart_id FROM cart WHERE user_id = ?)";
+			st = conn.prepareStatement(deleteCartItemsQuery);
+			st.setInt(1, productId);
+			st.setInt(2, userId);
+			st.executeUpdate();
 
-	        conn.commit(); // Commit the transaction
-	    } catch (SQLException e) {
-	        conn.rollback(); // Rollback in case of any error
-	        throw e; // Re-throw the exception to indicate failure
-	    } finally {
-	        conn.setAutoCommit(true); // Reset auto-commit
-	    }
+			conn.commit(); // Commit the transaction
+		} catch (SQLException e) {
+			conn.rollback(); // Rollback in case of any error
+			throw e; // Re-throw the exception to indicate failure
+		} finally {
+			conn.setAutoCommit(true); // Reset auto-commit
+		}
 
 	}
 
@@ -197,29 +197,66 @@ public class OrderDao {
 		st.executeUpdate(); // Clear the cart
 
 	}
+
 	public List<order> getAllOrders() throws SQLException {
-        List<order> orders = new ArrayList<>();
+		List<order> orders = new ArrayList<>();
 
-        String query = "SELECT o.order_id, CONCAT(u.Firstname, ' ', u.Lastname) AS customerName, "
-                + "o.order_date, o.totalAmount, o.status "
-                + "FROM Orders o "
-                + "JOIN user_details u ON o.user_id = u.Id";
+		String query = "SELECT o.order_id, CONCAT(u.Firstname, ' ', u.Lastname) AS customerName, "
+				+ "o.order_date, o.totalAmount, o.status " + "FROM Orders o "
+				+ "JOIN user_details u ON o.user_id = u.Id";
 
-        st = conn.prepareStatement(query);
-        rs = st.executeQuery();
+		st = conn.prepareStatement(query);
+		rs = st.executeQuery();
 
-        while (rs.next()) {
-            int orderId = rs.getInt("order_id");
-            String customerName = rs.getString("customerName");
-            Date orderDate = rs.getDate("order_date");
-            double totalAmount = rs.getDouble("totalAmount");
-            String status = rs.getString("status");
+		while (rs.next()) {
+			int orderId = rs.getInt("order_id");
+			String customerName = rs.getString("customerName");
+			Date orderDate = rs.getDate("order_date");
+			double totalAmount = rs.getDouble("totalAmount");
+			String status = rs.getString("status");
 
-            // Assuming you have an Order class with a constructor that accepts these arguments
-            orders.add(new order(orderId, customerName, orderDate, totalAmount, status));
-        }
+			// Assuming you have an Order class with a constructor that accepts these
+			// arguments
+			orders.add(new order(orderId, customerName, orderDate, totalAmount, status));
+		}
 
-        return orders;
-    }
+		return orders;
+	}
+
+	public List<cartItem> getOrderItemsByOrderId(int orderId) throws SQLException {
+		List<cartItem> orderItems = new ArrayList<>();
+
+		String query = "SELECT oi.Product_Id, oi.quantity, pd.name, pd.price " + "FROM Order_Items oi "
+				+ "JOIN product_details pd ON oi.Product_Id = pd.id " + "WHERE oi.Order_id = ?";
+
+		st = conn.prepareStatement(query);
+		st.setInt(1, orderId);
+		rs = st.executeQuery();
+
+		while (rs.next()) {
+			int productId = rs.getInt("Product_Id");
+			int quantity = rs.getInt("quantity");
+			String productName = rs.getString("name");
+			int productPrice = rs.getInt("price");
+
+			orderItems.add(new cartItem(0, productId, productName, quantity, null, null, productPrice));
+		}
+
+		return orderItems;
+	}
+	public void approveOrder(int orderId) throws SQLException {
+	    String updateQuery = "UPDATE orders SET status = 'Approved' WHERE order_id = ?";
+	    st = conn.prepareStatement(updateQuery);
+	    st.setInt(1, orderId);
+	    st.executeUpdate();
+	}
+
+	public void deliverOrder(int orderId) throws SQLException {
+		String updateStatusQuery = "UPDATE orders SET status = 'delivered' WHERE order_id = ?";
+        st = conn.prepareStatement(updateStatusQuery);
+        st.setInt(1, orderId);
+        st.executeUpdate();
+		
+	}
 
 }

@@ -1,117 +1,133 @@
 @charset "UTF-8";
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}   
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
 
 body {
-    font-family: Arial, sans-serif;
+	font-family: Arial, sans-serif;
 }
 
-
-.container1{
-    position: relative;
-    width: 100%;
-    height: 70vh;
-    background-image: url(Images/Wtaches2.jpg);
-    padding: 50px 30px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    animation: container1 27s linear infinite;
-}
-@keyframes container1{
-    0%{
-        background-image: url(Images/Wtaches2.jpg);
-    }
-    30%{
-        background-image: url(Images/Wtaches2.jpg);
-    }
-    35%{
-        background-image: url(Images/Watch3.jpg);
-    }
-    65%{
-        background-image: url(Images/Watch3.jpg);
-    }
-    70%{
-       background-image: url(Images/Watch4.jpg); 
-    }
-    95%{
-        background-image: url(Images/Watch4.jpg);
-    }
+.container1 {
+	position: relative;
+	width: 100%;
+	height: 70vh;
+	background-image: url(Images/Wtaches2.jpg);
+	padding: 50px 30px;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	animation: container1 27s linear infinite;
 }
 
-.minicon{
-    margin-top: 180px;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    flex-direction: column;
-}
-.container1 h1{
-    font-size: 50px;
-    font-weight: 800;
-    line-height: 1.2rem;
-    letter-spacing: .6rem;
-    margin-bottom: 1.4rem;
+@keyframes container1 { 0%{
+	background-image: url("<%= request.getContextPath() %>/images/product1.jpg");
 }
 
-.container1 span{
-    color: red;
+30%
+{
+background-image:url("<%= request.getContextPath() %>/images/product1.jpg");
 }
-.container1 p{
-    font-size: medium;
-    font-weight: 500;
-    margin-bottom: 3rem;
-    letter-spacing: .2rem;
+35%
+{
+background-image:url("<%= request.getContextPath() %>/images/product2.jpg");
+}
+65%
+{
+background-image:url("<%= request.getContextPath() %>/images/product3.jpg");
+}
+70%
+{
+background-image:url("<%= request.getContextPath() %>/images/product4.jpg");
+}
+95%
+{
+background-image:url("<%= request.getContextPath() %>/images/product3.jpg");
+}
+}
+.minicon {
+	margin-top: 180px;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	flex-direction: column;
 }
 
-button{
-    display: inline-block;
-    background-color: black;
-    color: #fff;
-    margin-left: 100px;
-    padding: 13px 25px;
-    font-size: 15px;
-    letter-spacing: 1px;
-    border-radius: 5px;
-    transition: all .35s ease;
+.container1 h1 {
+	font-size: 50px;
+	font-weight: 800;
+	line-height: 1.2rem;
+	letter-spacing: .6rem;
+	margin-bottom: 1.4rem;
 }
 
-.container1 button:hover{
-    transform: translateY(-5px);
-    background-color: rgb(37, 37, 37);
+.container1 span {
+	color: red;
+}
+
+.container1 p {
+	font-size: medium;
+	font-weight: 500;
+	margin-bottom: 3rem;
+	letter-spacing: .2rem;
+}
+
+button {
+	display: inline-block;
+	background-color: black;
+	color: #fff;
+	margin-left: 100px;
+	padding: 13px 25px;
+	font-size: 15px;
+	letter-spacing: 1px;
+	border-radius: 5px;
+	transition: all .35s ease;
+}
+
+.container1 button:hover {
+	transform: translateY(-5px);
+	background-color: rgb(37, 37, 37);
 }
 
 .products {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	margin-top: 40px;
+}
 
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 40px;
-  }
-  .product {
-    width: 25%;
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+.product {
+	width: 25%;
+	margin-bottom: 20px;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .product img {
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 100px;
-  }
+.product img {
+	width: 100%;
+	border-radius: 8px;
+	margin-bottom: 100px;
+}
 
-  h2{
-    text-align: center;
-    padding-top: 50px;
-  }
-  .container1 p{
-    color: #fff;
-  }
+h2 {
+	text-align: center;
+	padding-top: 50px;
+}
 
+.container1 p {
+	color: #fff;
+}
 
+footer {
+	background-color: #333;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
+	position: relative;
+	bottom: 0;
+	width: 100%;
+}

@@ -93,9 +93,10 @@ public class ProductDao {
 	}
 
 	public int updateProduct(product Product) throws SQLException {
-		
-		st = conn.prepareStatement("update product_details set name=?, description=?, image_data=?, image_name=?, price=?, quantity=? where id = ?");
-		
+
+		st = conn.prepareStatement(
+				"update product_details set name=?, description=?, image_data=?, image_name=?, price=?, quantity=? where id = ?");
+
 		Blob blob = conn.createBlob();
 
 		blob.setBytes(1, Product.getImage_data());
@@ -107,37 +108,45 @@ public class ProductDao {
 		st.setInt(5, Product.getPrice());
 		st.setInt(6, Product.getQuantity());
 		st.setInt(7, Product.getId());
-	
-		
+
 		int row = st.executeUpdate();
 		return row;
-
 
 	}
 
 	public boolean deleteProduct(int id) throws SQLException {
-		
+
 		boolean isSuccess = false;
 		st = conn.prepareStatement("DELETE FROM product_details WHERE id = ?");
 		st.setInt(1, id);
 		int row = st.executeUpdate();
-		if(row>0)
-		{
+		if (row > 0) {
 			isSuccess = true;
 		}
-		
+
 		return isSuccess;
 	}
-	
+
+	public void decreaseProductQuantity(int productId, int decrement) throws SQLException {
+		String query = "UPDATE product_details SET quantity = quantity - ? WHERE id = ?";
+		st = conn.prepareStatement(query);
+		st.setInt(1, decrement);
+		st.setInt(2, productId);
+		st.executeUpdate();
+	}
+
 	// Method to close resources to avoid memory leaks
-    public void closeResources() {
-        try {
-            if (set != null) set.close();
-            if (st != null) st.close();
-            if (conn != null) conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+	public void closeResources() {
+		try {
+			if (set != null)
+				set.close();
+			if (st != null)
+				st.close();
+			if (conn != null)
+				conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

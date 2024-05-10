@@ -64,7 +64,6 @@ body {
 			</form>
 		</div>
 	</div>
-	<div class="height:80px"></div>
-	<%@ include file="includes/footer.jsp"%>
+	
 </body>
 </html>

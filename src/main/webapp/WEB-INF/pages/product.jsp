@@ -114,7 +114,7 @@ body {
 </head>
 <body>
 	<%@ include file="includes/header.jsp"%>
-	<div style="height: 80px;"></div>
+	<div style="height: 40px;"></div>
 	<h1 style="margin-left: 20px;">Our Products</h1>
 
 	<!-- Filter Form for Searching by Name and Price -->
@@ -141,7 +141,11 @@ body {
 			style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;">
 			Item already exists in the cart.</div>
 	</c:if>
-
+	<!-- Display error message if a required parameter is missing -->
+	<c:if test="${param.error == 'missing_product_id'}">
+		<div style="color: red;">Product ID is missing. Please try
+			again.</div>
+	</c:if>
 
 
 	<div class="container">

@@ -197,6 +197,12 @@ button:hover {
 				</form>
 			</c:when>
 			<c:otherwise>
+				<c:if test="${not empty sessionScope.checkoutMessage}">
+					<div class="success-message">${sessionScope.checkoutMessage}
+					</div>
+					<!-- Remove the session attribute  -->
+					<c:remove var="checkoutMessage" scope="session" />
+				</c:if>
 				<p>Your cart is empty.</p>
 				<!-- Message when the cart is empty -->
 			</c:otherwise>

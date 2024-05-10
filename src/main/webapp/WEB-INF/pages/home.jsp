@@ -26,9 +26,10 @@
 			<p>Discover the latest smart watches for your active lifestyle.</p>
 			<button>Shop Now</button>
 		</div>
-		<div class="container"></div>
-		<h2>Popular Products</h2>
-		<div class="products">
+		</div>
+	<div class="container"></div>
+	<h2>Popular Products</h2>
+	<div class="products">
 			<div class="product">
 				<img src="${pageContext.request.contextPath}/images/product1.jpg" alt="Product 1" />
 				<h3>Smartwatch 1</h3>
@@ -65,7 +66,7 @@
 			</div>
 		</div>
 	</div>
-
+<div style="height: 80px;"></div>
 <%@ include file="includes/footer.jsp"%>
 
 <script src="home.js"></script>

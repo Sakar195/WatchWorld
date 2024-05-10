@@ -11,7 +11,7 @@
 <style>
 #role {
 	width: 150px;
-
+}
 body {
     font-family: sans-serif;
     margin: 0;
@@ -30,6 +30,7 @@ body {
 </head>
 <body>
 	<%@ include file="includes/header.jsp"%>
+	<div style="height: 80px;"></div>
 	<div class="container">
 		<h1>Register</h1>
 		<%
@@ -115,7 +116,7 @@ body {
 				back</a>
 		</form>
 	</div>
-	<%@ include file="includes/footer.jsp"%>
+	
 </body>
 
 
