@@ -44,7 +44,7 @@ public class UpdateQuantityOnCart extends HttpServlet {
 		
 		HttpSession session = request.getSession(false);
 		request.getParameterMap().forEach((key, value) -> {
-			if (key.startsWith("quantity_")) {
+			if (key.startsWith("quantity_")&& !key.equals("product_id")) {
 				String productIdStr = key.split("_")[1]; // Extract the product ID from the parameter name
 				int productId = Integer.parseInt(productIdStr);
 				int quantity = Integer.parseInt(value[0]); // Get the quantity

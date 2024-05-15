@@ -34,10 +34,7 @@ public class UserProduct extends HttpServlet {
 			ProductDao dao = new ProductDao();
 			List<product> listOfProduct;
 			listOfProduct = dao.getProductDetails();
-			for (product productdb : listOfProduct) {
-				String base64ImageData = Base64.getEncoder().encodeToString(productdb.getImage_data());
-				productdb.setBase64ImageData(base64ImageData);
-			}
+			
 			System.out.println("Retrieved product list with " + listOfProduct.size() + " items.");
 			
 			

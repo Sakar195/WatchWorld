@@ -93,7 +93,7 @@ body {
 				<li><a href="#">Dashboard</a></li>
 				<li><a href="<%=request.getContextPath()%>/VProduct">View Products</a></li>
 				<li><a href="<%=request.getContextPath()%>/AddProduct">Add New Product</a></li>
-				<li><a href="<%=request.getContextPath()%>/Users">Users</a></li>
+				<li><a href="<%=request.getContextPath()%>/User">Users</a></li>
 				<li><a href="<%=request.getContextPath()%>/Orders">Orders</a></li>
 				<li><a href="<%=request.getContextPath()%>/Profile">Go Back</a></li>
 				

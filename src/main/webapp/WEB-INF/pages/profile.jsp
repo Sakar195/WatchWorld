@@ -48,6 +48,18 @@
 			$(this).addClass("active");
 		});
 	});
+
+	function validateForm() {
+		var inputs = document
+				.querySelectorAll('.account input[type="text"], .account input[type="email"], .account input[type="tel"], .account input[type="password"], .account select');
+		for (var i = 0; i < inputs.length; i++) {
+			if (inputs[i].value.trim() === '') {
+				alert('Please fill in all fields.');
+				return false; // Prevent form submission
+			}
+		}
+		return true; // Allow form submission if all fields are filled
+	}
 </script>
 </head>
 <body>
@@ -63,17 +75,22 @@
 			</div>
 
 			<div class="menu">
-				<a href="#" class="menu-link account-button active">Account</a>
-				<!--icon halam-->
-				<a href="#" class="menu-link">Order</a>
-				<!--icon halam-->
+				<a href="<%=request.getContextPath()%>/Profile?method=get"
+					class="menu-link account-button active">Account</a>
+
+				<c:if test="${sessionScope.role_id == 1}">
+					<a href="<%=request.getContextPath()%>/Orders" class="menu-link">Orders</a>
+				</c:if>
+
 				<a href="#" class="menu-link change-password-button">Change
 					Password</a>
 				<!-- Change Password link -->
-				<!--icon halam-->
+
 				<a href="#" class="menu-link">Payment Option</a>
-				<!--icon halam-->
-				<a href="#" class="menu-link">History</a>
+
+				<c:if test="${sessionScope.role_id != 1}">
+					<a href="<%=request.getContextPath()%>/UserOrders" class="menu-link">History</a>
+				</c:if>
 				<c:if test="${sessionScope.role_id == 1}">
 					<a href="<%=request.getContextPath()%>/admin" class="menu-link">Admin
 						Panel</a>
@@ -103,7 +120,8 @@
 			<div class="account-edit">
 				<div class="input-container">
 					<label for="firstName">First Name:</label> <input type="text"
-						id="firstName" value="${user.firstName}" name="firstName" required>
+						id="firstName" value="${user.firstName}" name="firstName"
+						placeholder="First Name" required>
 				</div>
 
 				<div class="input-container">
@@ -122,7 +140,7 @@
 				<div class="input-container">
 					<label for="phoneNumber">Phone Number:</label> <input type="tel"
 						id="phoneNumber" value="${user.phoneNumber }" name="phoneNumber"
-						required>
+						placeholder="Phone number" required>
 				</div>
 			</div>
 
@@ -233,9 +251,9 @@
 					<c:out value="${errorMessage}" />
 				</p>
 			</c:if>
-			<c:if test="${not empty message}">
+			<c:if test="${not empty message1}">
 				<p style="color: green">
-					<c:out value="${message}" />
+					<c:out value="${message1}" />
 				</p>
 			</c:if>
 

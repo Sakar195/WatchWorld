@@ -2,6 +2,7 @@ package service;
 
 import model.cartItem;
 import model.order;
+import model.orderItem;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -61,12 +62,13 @@ public class OrderDao {
 		rs = st.executeQuery();
 
 		if (rs.next()) {
-			System.out.println("Product already exists in the cart");
+			System.out.println("Product already exists in the cart11111111");
 			return false; // Product is already in the cart
 		}
 
 		// Add the product to the cart if it doesn't exist
 		String addCartItemQuery = "INSERT INTO cart_items (cart_id, product_id, quantity, addedDate) VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
+		System.out.println("adding existing product");
 		st = conn.prepareStatement(addCartItemQuery);
 		st.setInt(1, cartId);
 		st.setInt(2, productId);
@@ -136,12 +138,6 @@ public class OrderDao {
 		conn.setAutoCommit(false); // Start a transaction
 
 		try {
-			// First, clear any dependent references (like Order_Items) if needed
-			String deleteOrderItemsQuery = "DELETE FROM Order_Items WHERE Product_Id = ?";
-			st = conn.prepareStatement(deleteOrderItemsQuery);
-			st.setInt(1, productId);
-			st.executeUpdate();
-
 			// Now, delete from cart_items
 			String deleteCartItemsQuery = "DELETE FROM cart_items WHERE product_id = ? AND cart_id = (SELECT cart_id FROM cart WHERE user_id = ?)";
 			st = conn.prepareStatement(deleteCartItemsQuery);
@@ -217,7 +213,7 @@ public class OrderDao {
 
 			// Assuming you have an Order class with a constructor that accepts these
 			// arguments
-			orders.add(new order(orderId, customerName, orderDate, totalAmount, status));
+			orders.add(new order(orderId, customerName, orderDate, totalAmount, status,null));
 		}
 
 		return orders;
@@ -244,19 +240,73 @@ public class OrderDao {
 
 		return orderItems;
 	}
+
 	public void approveOrder(int orderId) throws SQLException {
-	    String updateQuery = "UPDATE orders SET status = 'Approved' WHERE order_id = ?";
-	    st = conn.prepareStatement(updateQuery);
-	    st.setInt(1, orderId);
-	    st.executeUpdate();
+		String updateQuery = "UPDATE orders SET status = 'Approved' WHERE order_id = ?";
+		st = conn.prepareStatement(updateQuery);
+		st.setInt(1, orderId);
+		st.executeUpdate();
 	}
 
 	public void deliverOrder(int orderId) throws SQLException {
 		String updateStatusQuery = "UPDATE orders SET status = 'delivered' WHERE order_id = ?";
-        st = conn.prepareStatement(updateStatusQuery);
-        st.setInt(1, orderId);
-        st.executeUpdate();
-		
+		st = conn.prepareStatement(updateStatusQuery);
+		st.setInt(1, orderId);
+		st.executeUpdate();
+
+	}
+
+	public List<order> getOrdersByUserId(int userId) throws SQLException {
+		List<order> userOrders = new ArrayList<>();
+
+		String query = "SELECT o.order_id, o.order_date, o.totalAmount, o.status, "
+				+ "(SELECT GROUP_CONCAT(oi.product_id SEPARATOR ',') FROM Order_Items oi WHERE oi.order_id = o.order_id) AS product_ids, "
+				+ "(SELECT GROUP_CONCAT(oi.quantity SEPARATOR ',') FROM Order_Items oi WHERE oi.order_id = o.order_id) AS quantities "
+				+ "FROM Orders o " + "WHERE o.user_id = ?";
+
+		st = conn.prepareStatement(query);
+		st.setInt(1, userId);
+		rs = st.executeQuery();
+
+		while (rs.next()) {
+			int orderId = rs.getInt("order_id");
+			Date orderDate = rs.getDate("order_date");
+			double totalAmount = rs.getDouble("totalAmount");
+			String status = rs.getString("status");
+			String productIdsString = rs.getString("product_ids");
+			String quantitiesString = rs.getString("quantities");
+
+			// Convert product IDs and quantities from strings to arrays
+			String[] productIds = productIdsString != null ? productIdsString.split(",") : new String[0];
+			String[] quantities = quantitiesString != null ? quantitiesString.split(",") : new String[0];
+
+			// Create a list to store order items for the current order
+			List<orderItem> orderItems = null;
+
+			if (productIds.length == quantities.length) {
+				// Populate the order items list only if productIds and quantities have the same
+				// length
+				orderItems = new ArrayList<>();
+
+				// Populate the order items list
+				for (int i = 0; i < productIds.length; i++) {
+					int productId = Integer.parseInt(productIds[i]);
+					int quantity = Integer.parseInt(quantities[i]);
+
+					// You may need to retrieve product details from the database based on productId
+					// For simplicity, I'm creating a dummy cartItem object with just the productId
+					// and quantity
+					orderItem item = new orderItem(productId, quantity);
+					orderItems.add(item);
+				}
+			}
+
+			// Create an order object with order details and order items
+			order userOrder = new order(orderId, null, orderDate, totalAmount, status, orderItems);
+			userOrders.add(userOrder);
+		}
+
+		return userOrders;
 	}
 
 }

@@ -195,7 +195,8 @@ nav a:hover {
 						<button type="submit" onclick="confirmLogout()"
 							class="login-button">Log Out</button>
 					</form></li>
-				<li><a href="<%=request.getContextPath()%>/Profile">Profile</a></li>
+				<li><a href="<%=request.getContextPath()%>/Profile"><i
+						class="fa fa-user fa-lg"></i> </a></li>
 				<%
 				}
 
@@ -211,16 +212,17 @@ nav a:hover {
 			</ul>
 		</nav>
 		<div class="cart">
-			<a href="#" onclick="checkLoginAndNavigate(event, '<%= request.getContextPath() %>/Cart','You need to log in to view your cart.')"><i
+			<a href="#"
+				onclick="checkLoginAndNavigate(event, '<%=request.getContextPath()%>/Cart','You need to log in to view your cart.')"><i
 				class="fa fa-shopping-bag"></i></a>
 		</div>
 	</header>
 	<script src="<%=request.getContextPath()%>/js/script.js"></script>
 	<script>
 	 
-	var isLoggedIn = <%= isLoggedIn ? "true" : "false" %>;
+	var isLoggedIn = <%=isLoggedIn ? "true" : "false"%>;
 	 
-	setIsLoggedIn("<%= isLoggedIn ? "true" : "false" %>");
+	setIsLoggedIn("<%=isLoggedIn ? "true" : "false"%>");
 	</script>
 </body>
 </html>

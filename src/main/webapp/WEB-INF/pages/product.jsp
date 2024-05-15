@@ -16,8 +16,8 @@ body {
 }
 
 .container {
-	margin-top: 100px;
-	padding: 20px;
+	margin-top: 0px;
+	padding: 10px;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: flex-start;
@@ -119,7 +119,7 @@ body {
 
 	<!-- Filter Form for Searching by Name and Price -->
 	<div class="filter-form">
-		<form action="FilterProducts" method="get">
+		<form action="FProducts" method="get">
 			<label for="name">Name:</label> <input type="text" name="name"
 				id="name" placeholder="Search by name" /> <label for="price">Price
 				(up to):</label> <input type="number" name="price" id="price"
@@ -156,40 +156,36 @@ body {
 				<p style="margin: 20px;">No products found.</p>
 			</c:when>
 			<c:otherwise>
-
-				<c:forEach var="product" items="${productlist}">
-					<div class="product-card">
-						<img src="data:image/jpeg;base64,${product.base64ImageData}"
-							alt="${product.name}" />
-						<div class="product-name">
-							<c:out value="${product.name}" />
+				<div class="container">
+					<c:forEach var="product" items="${productlist}">
+						<div class="product-card">
+							<img src="data:image/jpeg;base64,${product.base64ImageData}"
+								alt="${product.name}" />
+							<div class="product-name">
+								<c:out value="${product.name}" />
+							</div>
+							<div class="price">
+								$
+								<c:out value="${product.price}" />
+							</div>
+							<!-- Button Group for Actions -->
+							<div class="button-group">
+								<form action="Details" method="get">
+									<input type="hidden" name="product_id" value="${product.id}" />
+									<button>View Details</button>
+								</form>
+								<form action="${pageContext.request.contextPath}/AddCart"
+									method="post">
+									<input type="hidden" name="product_id" value="${product.id}" />
+									<input type="hidden" name="referrer" value="product" />
+									<button
+										onclick="checkLoginAndNavigate(event, '<%=request.getContextPath()%>/AddCart', 'You need to log in to buy this product.')">Add
+										to Cart</button>
+								</form>
+							</div>
 						</div>
-						<div class="price">
-							$
-							<c:out value="${product.price}" />
-						</div>
-
-						<!-- Button Group for Actions -->
-						<div class="button-group">
-							<!-- View Details Button -->
-							<form action="Details" method="get">
-								<input type="hidden" name="product_id" value="${product.id}" />
-								<button>View Details</button>
-							</form>
-
-							<!-- Add to Cart Button -->
-							<form action="${pageContext.request.contextPath}/AddCart"
-								method="post">
-								<input type="hidden" name="product_id" value="${product.id}" />
-								<input type="hidden" name="referrer" value="product" />
-								<button
-									onclick="checkLoginAndNavigate(event, '<%=request.getContextPath()%>/AddCart', 'You need to log in to buy this product.')">Add
-									to Cart</button>
-							</form>
-
-						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
+				</div>
 			</c:otherwise>
 		</c:choose>
 	</div>
@@ -200,8 +196,8 @@ body {
 	 
 	var isLoggedIn = <%=isLoggedIn ? "true" : "false"%>;
 	 
-	setIsLoggedIn("<%=isLoggedIn ? "true" : "false"%>
-		");
+	setIsLoggedIn("<%=isLoggedIn ? "true" : "false"%>");
 	</script>
 </body>
+
 </html>

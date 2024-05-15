@@ -68,7 +68,7 @@ public class ChangePassword extends HttpServlet {
 				boolean isChanged = userDao.changePassword(id,oldPassword,newPassword);
 				if (isChanged == true) {
 					request.setAttribute("errorSource", "change-password");
-					request.setAttribute("message", "Your Password has been changed");
+					request.setAttribute("message1", "Your Password has been changed");
 					request.getRequestDispatcher(MyConstants.PROFILE_PAGE).forward(request, response);
 				} else {
 					request.setAttribute("errorSource", "change-password");

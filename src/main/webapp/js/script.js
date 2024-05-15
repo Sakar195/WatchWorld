@@ -13,9 +13,9 @@ function setIsLoggedIn(value) {
 	isLoggedIn = value === "true";
 }
 
-// Assume this variable is set from the server-side. In your case, it comes from JSP.
-//var isLoggedIn = false;
 
+
+// checking if user has logged in and displaying appropiate message.
 function checkLoginAndNavigate(event, url, message) {
 	if (!isLoggedIn) {
 		event.preventDefault(); // Prevent navigation

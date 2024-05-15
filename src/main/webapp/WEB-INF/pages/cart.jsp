@@ -161,8 +161,7 @@ button:hover {
 									<td>${subtotal}</td>
 									<!-- Display subtotal -->
 									<td>
-										<form action="${pageContext.request.contextPath}/RemoveItem"
-											method="post">
+										<form action="<%=request.getContextPath()%>/RemoveItem" method="post">
 											<input type="hidden" name="product_id"
 												value="${item.productId}" />
 											<button type="submit" class="remove-item">Remove</button>

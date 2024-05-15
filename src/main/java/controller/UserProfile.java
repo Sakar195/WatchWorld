@@ -50,6 +50,7 @@ public class UserProfile extends HttpServlet {
 				return;
 			}
 			User user = dao.getUserById(id);
+			session.setAttribute("user", user); // Set user object in session
 			request.setAttribute("user", user);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -72,7 +73,18 @@ public class UserProfile extends HttpServlet {
 		String address = request.getParameter("address");
 		String gender = request.getParameter("gender");
 		String userName = request.getParameter("userName");
-		Long phoneNumber = Long.parseLong(request.getParameter("phoneNumber"));
+		String phoneNumberStr = request.getParameter("phoneNumber");
+
+		// Check if any field is empty
+		if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || address.isEmpty() || gender.isEmpty()
+				|| userName.isEmpty() || phoneNumberStr.isEmpty()) {
+
+			request.setAttribute("error", "Fields cannot be left empty");
+			doGet(request, response);
+			return;
+		}
+
+		Long phoneNumber = Long.parseLong(phoneNumberStr);
 
 		User user = new User();
 		user.setId(id);

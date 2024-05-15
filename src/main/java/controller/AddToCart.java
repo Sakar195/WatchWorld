@@ -78,14 +78,17 @@ public class AddToCart extends HttpServlet {
 		try {
 			boolean success = false;
 			success = dao.addCartItem(userId, productId, 1);
+			System.out.println("entered add to cart");
 			if (success) {
 				if (referrer.equals("productDetails")) {
 					response.sendRedirect(
 							request.getContextPath() + "/Details?product_id=" + productId + "&added_to_cart=true");
+					System.out.println("entered add to cart1");
 
 				} else {
 					response.sendRedirect(
 							request.getContextPath() + "/Product?added_to_cart=true&cart_error=item_already_exists");
+					System.out.println("entered add to cart2");
 
 				}
 				System.out.println(referrer);
@@ -96,10 +99,10 @@ public class AddToCart extends HttpServlet {
 							+ "&added_to_cart=false&cart_error=item_already_exists");
 
 				} else {
-					response.sendRedirect(request.getContextPath() + "/Product?added_to_cart=false");
+					response.sendRedirect(request.getContextPath() + "/Product?added_to_cart=false&cart_error=item_already_exists");
 
 				}
-				System.out.println(referrer);
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -1,37 +1,31 @@
-package controller.admin;
+package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Base64;
 import java.util.List;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import appConstant.MyConstants;
-import model.product;
-import service.ProductDao;
+import model.order;
+import service.OrderDao;
 
 /**
- * Servlet implementation class ViewProduct
+ * Servlet implementation class ViewUserOrders
  */
-@WebServlet(asyncSupported = true, urlPatterns = { "/VProduct" })
-public class ViewProduct extends HttpServlet {
+@WebServlet(asyncSupported = true, urlPatterns = { "/UserOrders" })
+public class ViewUserOrders extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ProductDao dao;
 
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
-		super.init(config);
-		dao = new ProductDao();
-	}
-
-	public ViewProduct() {
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ViewUserOrders() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -42,20 +36,20 @@ public class ViewProduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		HttpSession session = request.getSession(false);
+		Integer userId = (Integer) session.getAttribute("userId");
 
+		OrderDao dao = new OrderDao();
 		try {
-			List<product> listOfProduct = dao.getProductDetails();
-
-			
-			request.setAttribute("listOfProduct", listOfProduct);
-			request.getRequestDispatcher(MyConstants.VIEWPRODUCT_PAGE).forward(request, response);
-
+			List<order> userOrders = dao.getOrdersByUserId(userId);
+			request.setAttribute("userOrders", userOrders);
+			request.getRequestDispatcher(MyConstants.USER_ORDER_PAGE).forward(request, response);
 		} catch (SQLException e) {
-			request.setAttribute("error", "An error occurred while fetching product details.");
-			request.getRequestDispatcher("Error").forward(request, response);
+			e.printStackTrace(); // Handle exception appropriately
+			// Optionally, redirect to an error page
+			response.sendRedirect(request.getContextPath() + "/Error");
 		}
-
 	}
 
 	/**

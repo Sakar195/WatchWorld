@@ -11,6 +11,7 @@ public class MyConstants {
 	public static String PROFILE_PAGE = "/WEB-INF/pages/profile.jsp";
 	
 	public static String ABOUTUS_PAGE = "/WEB-INF/pages/aboutus.jsp";
+	public static String USER_ORDER_PAGE = "/WEB-INF/pages/userOrders.jsp";
 	
 	public static String ADMIN_PAGE = "/WEB-INF/pages/admin/adminPanel.jsp";
 	public static String ADDPRODUCT_PAGE = "/WEB-INF/pages/admin/addProduct.jsp";

@@ -58,7 +58,11 @@ public class ProductDao {
 			image.setPrice(set.getInt("price"));
 			image.setQuantity(set.getInt("quantity"));
 
-			image.setImage_data(set.getBlob("image_data").getBytes(1, (int) set.getBlob("image_data").length()));
+			//image.setImage_data(set.getBlob("image_data").getBytes(1, (int) set.getBlob("image_data").length()));
+			
+			byte[] imageData = set.getBytes("image_data");
+			String base64ProductImage = Base64.getEncoder().encodeToString(imageData); // Convert to Base64
+			image.setBase64ImageData(base64ProductImage);
 			image.setImage_name(set.getString("image_name"));
 
 			listOfProduct.add(image);
@@ -133,6 +137,51 @@ public class ProductDao {
 		st.setInt(1, decrement);
 		st.setInt(2, productId);
 		st.executeUpdate();
+	}
+	
+	public List<product> getProductsByFilter(String nameFilter, Integer maxPrice) throws SQLException {
+	    String query = "SELECT * FROM product_details WHERE 1=1";
+
+	    if (nameFilter != null && !nameFilter.trim().isEmpty()) {
+	        query += " AND name LIKE ?";
+	    }
+
+	    if (maxPrice != null) {
+	        query += " AND price <= ?";
+	    }
+
+	    st = conn.prepareStatement(query);
+	    int paramIndex = 1;
+
+	    if (nameFilter != null && !nameFilter.trim().isEmpty()) {
+	        st.setString(paramIndex++, "%" + nameFilter + "%");
+	    }
+
+	    if (maxPrice != null) {
+	        st.setInt(paramIndex, maxPrice);
+	    }
+
+	    set = st.executeQuery();
+	    List<product> products = new ArrayList<>();
+
+	    while (set.next()) {
+	        product prod = new product();
+	        prod.setId(set.getInt("id"));
+	        prod.setName(set.getString("name"));
+	        prod.setDescription(set.getString("description"));
+	        prod.setPrice(set.getInt("price"));
+	        prod.setQuantity(set.getInt("quantity"));
+
+	        Blob imageBlob = set.getBlob("image_data");
+	        if (imageBlob != null) {
+	            prod.setImage_data(imageBlob.getBytes(1, (int) imageBlob.length()));
+	            prod.setBase64ImageData(Base64.getEncoder().encodeToString(prod.getImage_data()));
+	        }
+
+	        products.add(prod);
+	    }
+
+	    return products;
 	}
 
 	// Method to close resources to avoid memory leaks

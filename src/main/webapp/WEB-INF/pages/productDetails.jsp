@@ -178,8 +178,7 @@ div[style] {
 	<script>
 	var isLoggedIn = <%=isLoggedIn ? "true" : "false"%>;
 	 
-	setIsLoggedIn("<%=isLoggedIn ? "true" : "false"%>
-		");
+	setIsLoggedIn("<%=isLoggedIn ? "true" : "false"%>");
 	</script>
 </body>
 </html>
